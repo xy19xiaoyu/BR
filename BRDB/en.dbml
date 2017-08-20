@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ExtractData" Class="enDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-JLKLR7U;Initial Catalog=ExtractData;Persist Security Info=True;User ID=sa" SettingsObjectName="BRDB.Properties.Settings" SettingsPropertyName="ExtractDataConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.DocInfo" Member="DocInfo">
+    <Type Name="DocInfo">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DocId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="PubID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PubDate" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="AppNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AppDate" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Applicants" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ApplicantCountry" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Inventors" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Abstract" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PubNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="OriginalAppNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DocdbAppNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.en" Member="en">
+    <Type Name="en">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="pn" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="an" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="p_c" Type="System.String" DbType="Char(2)" CanBeNull="true" />
+      <Column Name="i_c" Type="System.String" DbType="Char(2)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.en_ipc" Member="en_ipc">
+    <Type Name="en_ipc">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="pn" Type="System.String" DbType="VarChar(13)" CanBeNull="true" />
+      <Column Name="ipc" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="ipc1" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="ipc3" Type="System.String" DbType="VarChar(3)" CanBeNull="true" />
+      <Column Name="ipc4" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="ipc7" Type="System.String" DbType="VarChar(7)" CanBeNull="true" />
+      <Column Name="sort" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.en_pa" Member="en_pa">
+    <Type Name="en_pa">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="pn" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="pa" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Ipc" Member="Ipc">
+    <Type Name="Ipc">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PubID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Sequence" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IPC" Member="IPC1" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>
