@@ -33,9 +33,6 @@ namespace BRDB
     partial void InsertDocInfo(DocInfo instance);
     partial void UpdateDocInfo(DocInfo instance);
     partial void DeleteDocInfo(DocInfo instance);
-    partial void Inserten(en instance);
-    partial void Updateen(en instance);
-    partial void Deleteen(en instance);
     partial void Inserten_ipc(en_ipc instance);
     partial void Updateen_ipc(en_ipc instance);
     partial void Deleteen_ipc(en_ipc instance);
@@ -45,6 +42,9 @@ namespace BRDB
     partial void InsertIpc(Ipc instance);
     partial void UpdateIpc(Ipc instance);
     partial void DeleteIpc(Ipc instance);
+    partial void Inserten(en instance);
+    partial void Updateen(en instance);
+    partial void Deleteen(en instance);
     #endregion
 		
 		public enDataContext() : 
@@ -85,14 +85,6 @@ namespace BRDB
 			}
 		}
 		
-		public System.Data.Linq.Table<en> en
-		{
-			get
-			{
-				return this.GetTable<en>();
-			}
-		}
-		
 		public System.Data.Linq.Table<en_ipc> en_ipc
 		{
 			get
@@ -114,6 +106,14 @@ namespace BRDB
 			get
 			{
 				return this.GetTable<Ipc>();
+			}
+		}
+		
+		public System.Data.Linq.Table<en> en
+		{
+			get
+			{
+				return this.GetTable<en>();
 			}
 		}
 	}
@@ -467,164 +467,6 @@ namespace BRDB
 					this._DocdbAppNo = value;
 					this.SendPropertyChanged("DocdbAppNo");
 					this.OnDocdbAppNoChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.en")]
-	public partial class en : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _pn;
-		
-		private string _an;
-		
-		private string _p_c;
-		
-		private string _i_c;
-		
-    #region 可扩展性方法定义
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnpnChanging(string value);
-    partial void OnpnChanged();
-    partial void OnanChanging(string value);
-    partial void OnanChanged();
-    partial void Onp_cChanging(string value);
-    partial void Onp_cChanged();
-    partial void Oni_cChanging(string value);
-    partial void Oni_cChanged();
-    #endregion
-		
-		public en()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pn", DbType="VarChar(20)")]
-		public string pn
-		{
-			get
-			{
-				return this._pn;
-			}
-			set
-			{
-				if ((this._pn != value))
-				{
-					this.OnpnChanging(value);
-					this.SendPropertyChanging();
-					this._pn = value;
-					this.SendPropertyChanged("pn");
-					this.OnpnChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_an", DbType="VarChar(20)")]
-		public string an
-		{
-			get
-			{
-				return this._an;
-			}
-			set
-			{
-				if ((this._an != value))
-				{
-					this.OnanChanging(value);
-					this.SendPropertyChanging();
-					this._an = value;
-					this.SendPropertyChanged("an");
-					this.OnanChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_p_c", DbType="Char(2)")]
-		public string p_c
-		{
-			get
-			{
-				return this._p_c;
-			}
-			set
-			{
-				if ((this._p_c != value))
-				{
-					this.Onp_cChanging(value);
-					this.SendPropertyChanging();
-					this._p_c = value;
-					this.SendPropertyChanged("p_c");
-					this.Onp_cChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_i_c", DbType="Char(2)")]
-		public string i_c
-		{
-			get
-			{
-				return this._i_c;
-			}
-			set
-			{
-				if ((this._i_c != value))
-				{
-					this.Oni_cChanging(value);
-					this.SendPropertyChanging();
-					this._i_c = value;
-					this.SendPropertyChanged("i_c");
-					this.Oni_cChanged();
 				}
 			}
 		}
@@ -1099,6 +941,212 @@ namespace BRDB
 					this._IPC1 = value;
 					this.SendPropertyChanged("IPC1");
 					this.OnIPC1Changed();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.en")]
+	public partial class en : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _pn;
+		
+		private string _an;
+		
+		private string _p_c;
+		
+		private string _i_c;
+		
+		private System.Nullable<int> _ady;
+		
+		private System.Nullable<int> _pdy;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnpnChanging(string value);
+    partial void OnpnChanged();
+    partial void OnanChanging(string value);
+    partial void OnanChanged();
+    partial void Onp_cChanging(string value);
+    partial void Onp_cChanged();
+    partial void Oni_cChanging(string value);
+    partial void Oni_cChanged();
+    partial void OnadyChanging(System.Nullable<int> value);
+    partial void OnadyChanged();
+    partial void OnpdyChanging(System.Nullable<int> value);
+    partial void OnpdyChanged();
+    #endregion
+		
+		public en()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pn", DbType="VarChar(20)")]
+		public string pn
+		{
+			get
+			{
+				return this._pn;
+			}
+			set
+			{
+				if ((this._pn != value))
+				{
+					this.OnpnChanging(value);
+					this.SendPropertyChanging();
+					this._pn = value;
+					this.SendPropertyChanged("pn");
+					this.OnpnChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_an", DbType="VarChar(20)")]
+		public string an
+		{
+			get
+			{
+				return this._an;
+			}
+			set
+			{
+				if ((this._an != value))
+				{
+					this.OnanChanging(value);
+					this.SendPropertyChanging();
+					this._an = value;
+					this.SendPropertyChanged("an");
+					this.OnanChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_p_c", DbType="Char(2)")]
+		public string p_c
+		{
+			get
+			{
+				return this._p_c;
+			}
+			set
+			{
+				if ((this._p_c != value))
+				{
+					this.Onp_cChanging(value);
+					this.SendPropertyChanging();
+					this._p_c = value;
+					this.SendPropertyChanged("p_c");
+					this.Onp_cChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_i_c", DbType="Char(2)")]
+		public string i_c
+		{
+			get
+			{
+				return this._i_c;
+			}
+			set
+			{
+				if ((this._i_c != value))
+				{
+					this.Oni_cChanging(value);
+					this.SendPropertyChanging();
+					this._i_c = value;
+					this.SendPropertyChanged("i_c");
+					this.Oni_cChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ady", DbType="Int")]
+		public System.Nullable<int> ady
+		{
+			get
+			{
+				return this._ady;
+			}
+			set
+			{
+				if ((this._ady != value))
+				{
+					this.OnadyChanging(value);
+					this.SendPropertyChanging();
+					this._ady = value;
+					this.SendPropertyChanged("ady");
+					this.OnadyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pdy", DbType="Int")]
+		public System.Nullable<int> pdy
+		{
+			get
+			{
+				return this._pdy;
+			}
+			set
+			{
+				if ((this._pdy != value))
+				{
+					this.OnpdyChanging(value);
+					this.SendPropertyChanging();
+					this._pdy = value;
+					this.SendPropertyChanged("pdy");
+					this.OnpdyChanged();
 				}
 			}
 		}

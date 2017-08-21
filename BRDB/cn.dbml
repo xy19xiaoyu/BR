@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="db08" Class="cnDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost;Initial Catalog=db08;Persist Security Info=True;User ID=sa" SettingsObjectName="BRDB.Properties.Settings" SettingsPropertyName="db08ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.cn_ipc" Member="cn_ipc">
+    <Type Name="cn_ipc">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="an" Type="System.String" DbType="VarChar(13)" CanBeNull="true" />
+      <Column Name="ipc" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="ipc1" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="ipc3" Type="System.String" DbType="VarChar(3)" CanBeNull="true" />
+      <Column Name="ipc4" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="ipc7" Type="System.String" DbType="VarChar(7)" CanBeNull="true" />
+      <Column Name="sort" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cn_zt" Member="cn_zt">
+    <Type Name="cn_zt">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="an" Type="System.String" DbType="VarChar(13)" CanBeNull="true" />
+      <Column Name="zt" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>

@@ -19,5 +19,12 @@ namespace BRDB.Extend
                 return str;
             }
         }
+
+        public static int to_i(this string str)
+        {
+            int i = 0;
+            int.TryParse(str, out i);
+            return i;
+        }
     }
 }

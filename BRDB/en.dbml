@@ -18,15 +18,6 @@
       <Column Name="DocdbAppNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.en" Member="en">
-    <Type Name="en">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="pn" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="an" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="p_c" Type="System.String" DbType="Char(2)" CanBeNull="true" />
-      <Column Name="i_c" Type="System.String" DbType="Char(2)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.en_ipc" Member="en_ipc">
     <Type Name="en_ipc">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -52,6 +43,17 @@
       <Column Name="PubID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Sequence" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="IPC" Member="IPC1" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.en" Member="en">
+    <Type Name="en">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="pn" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="an" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="p_c" Type="System.String" DbType="Char(2)" CanBeNull="true" />
+      <Column Name="i_c" Type="System.String" DbType="Char(2)" CanBeNull="true" />
+      <Column Name="ady" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="pdy" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

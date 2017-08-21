@@ -33,5 +33,16 @@ namespace BRDB.Properties {
                 return ((string)(this["ExtractDataConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=localhost;Initial Catalog=db08;Persist Security Info=True;User ID=sa;" +
+            "Password=f302c")]
+        public string db08ConnectionString {
+            get {
+                return ((string)(this["db08ConnectionString"]));
+            }
+        }
     }
 }
