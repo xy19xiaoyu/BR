@@ -102,7 +102,7 @@ namespace ST_2017.en
 
         public override string GetFilter()
         {
-            return $" en.p_c in({config.GuoJias}) ";
+             return $" en.p_c in({config.GuoJia}) ";
         }
     }
 }

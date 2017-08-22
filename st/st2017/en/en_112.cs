@@ -25,7 +25,7 @@ namespace ST_2017.en
         {
 
             List<string> heads = new List<string> { "行业" };
-            heads.AddRange(GetGJS());
+            heads.AddRange(config.GuoJias);
 
             Console.WriteLine("开始出表：{0} ", Name);
 
@@ -98,15 +98,17 @@ PIVOT(sum(申请量) for 国家 in({0})) as table2", hy.Key, GetFilter(), GetCou
 
         public override string GetFilter()
         {
-            return $" p_c='UA' and  i_c  in ('DE','FR','CH','US','JP')";
+            return $" p_c in({config.GuoJia} and  i_c  in ({config.StrTop5Guojia})";
         }
-        public List<string> GetGJS()
-        {
-            return new List<string>() { "DE", "FR", "CH", "US", "JP" };
-        }
+
         public string GetCountry()
-        {
-            return string.Format("[DE],[FR],[CH],[US],[JP]");
+        {            
+            StringBuilder sb = new StringBuilder();
+            foreach (var gj in config.GuoJias)
+            {
+                sb.Append($"[{gj}],");
+            }            
+            return sb.ToString(0, sb.Length - 1);
         }
     }
 }

@@ -15,6 +15,7 @@ using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.HSSF.Util;
 using ST_2017.cn;
+using ST_2017.en;
 
 namespace ST_2017
 {
@@ -46,6 +47,25 @@ namespace ST_2017
                 lstST.Add(new cn_06());
                 lstST.Add(new cn_07());
                 lstST.Add(new cn_08());
+                #endregion
+
+            }
+            if (config.Type.ToUpper() == "EN")
+            {
+                #region CN
+                lstST.Add(new en_101());
+                lstST.Add(new en_102());
+                lstST.Add(new en_103());
+                lstST.Add(new en_104());
+                lstST.Add(new en_105());
+                lstST.Add(new en_106());
+                lstST.Add(new en_107());
+                lstST.Add(new en_108());
+                lstST.Add(new en_109());
+                lstST.Add(new en_110());
+                lstST.Add(new en_111());
+                lstST.Add(new en_112());
+                lstST.Add(new en_113());
                 #endregion
 
             }

@@ -53,6 +53,30 @@ namespace ST_2017
 
         }
 
+        public static List<StatConfig> ConfigEN()
+        {
+            List<StatConfig> configs = new List<StatConfig>();
+            StatConfig c = new StatConfig()
+            {
+                Type = "EN",
+                Dir = "国外",
+                FileName = "UA",
+                GuoJias = new List<string>() { "UA" },
+                Shengs = new List<string>(),
+                Tables = new List<int>() { 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113 },
+                ZLTypes = new List<string>(),
+                ZTNames = new List<string>(),
+                Years = new List<string>() { "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017" }
+                Top5Guojia = new List<string>() { "DE", "FR", "CH", "US", "JP" }
+            };
+
+            configs.Add(c);
+
+            return configs;
+
+        }
+
+
 
     }
 

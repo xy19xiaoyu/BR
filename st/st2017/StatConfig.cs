@@ -9,6 +9,7 @@ namespace ST_2017
     [JsonObject(MemberSerialization.OptOut)]
     public class StatConfig
     {
+        public List<string> Top5Guojia { get; set; }
         public List<string> Years { get; set; }
         public string Type { get; set; }
         public string FileName { get; set; }
@@ -23,6 +24,7 @@ namespace ST_2017
         public Dictionary<string, string> QuYu { get; set; }
         public List<string> Pas { get; set; }
 
+       
 
         private string _stryears;
         public string strYears
@@ -159,6 +161,20 @@ namespace ST_2017
                 }
                 return _strPas;
             }
+        }
+        private string _strTop5Guojia;
+
+        public string StrTop5Guojia
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_strTop5Guojia))
+                {
+                    _strTop5Guojia = Top5Guojia.to_s();
+                }
+                return _strTop5Guojia;
+            }
+
         }
     }
 }

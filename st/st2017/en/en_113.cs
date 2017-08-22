@@ -48,7 +48,7 @@ namespace ST_2017.en
             sheet.SetColumnWidth(1, 40 * 256);
             #endregion
             rowIndex = 1;
-            foreach (var GJ in GetGJS())
+            foreach (var GJ in config.Top5Guojia)
             {
                 #region 获取申请国申请人
                 string pas = string.Format(@"
@@ -100,11 +100,8 @@ namespace ST_2017.en
 
         public override string GetFilter()
         {
-            return $" en.p_c in({config.GuoJias}) ";
+             return $" en.p_c in({config.GuoJia}) ";
         }
-        public List<string> GetGJS()
-        {
-            return new List<string>() { "DE", "FR", "CH", "US", "JP" };
-        }
+      
     }
 }

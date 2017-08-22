@@ -17,7 +17,7 @@ namespace ST_2017.en
         public en_105()
         {
             this.Id = 105;
-            this.Name = "逐年专利申请总量";
+            this.Name = "行业-逐年专利申请总量";
             this.type = "EN";
             this.DES = "";
         }
@@ -103,7 +103,7 @@ order by 申请量 desc", hy.Key, GetFilter());
 
         public override string GetFilter()
         {
-            return $" en.p_c in({config.GuoJias}) ";
+             return $" en.p_c in({config.GuoJia}) ";
         }
     }
 }

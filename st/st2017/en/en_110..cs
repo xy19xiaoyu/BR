@@ -46,13 +46,17 @@ order by 申请年
 
         public override string GetFilter()
         {
-            return $" p_c='UA' and  i_c  in ('DE','FR','CH','US','JP') ";
-            //and i_c not in ('US','JP','','UA')
+            return $" p_c in({config.GuoJia} and  i_c  in ({config.StrTop5Guojia})";
         }
 
         public string GetCountry()
         {
-            return string.Format("[DE],[FR],[CH],[US],[JP]");
+            StringBuilder sb = new StringBuilder();
+            foreach (var gj in config.GuoJias)
+            {
+                sb.Append($"[{gj}],");
+            }
+            return sb.ToString(0, sb.Length - 1);
         }
     }
 }
