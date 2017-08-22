@@ -21,6 +21,10 @@ namespace ST_2017.en
             this.type = "EN";
             this.DES = "";
         }
+        public override bool Sate(string ztName)
+        {
+            return true;
+        }
         public override bool OutPut2Worksheet(XSSFWorkbook xbook)
         {
 
@@ -71,7 +75,7 @@ namespace ST_2017.en
                 #region 创建表格
                 for (int j = 0; j < 50; j++)
                 {
-                    XSSFRow xls_row = sheet.GetRow(rowIndex + j) as XSSFRow;
+                    XSSFRow xls_row = sheet.CreateRow(rowIndex + j) as XSSFRow;
                     xls_row.CreateCell(0).SetCellValue(GJ);
                     xls_row.GetCell(0).CellStyle = valueStyle_left;
                     xls_row.CreateCell(1).SetCellValue("");

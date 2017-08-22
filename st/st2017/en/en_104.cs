@@ -78,7 +78,7 @@ namespace ST_2017.en
                 #region 创建表格
                 for (int j = 0; j < 10; j++)
                 {
-                    XSSFRow xls_row = sheet.GetRow(rowIndex + j) as XSSFRow;
+                    XSSFRow xls_row = sheet.CreateRow(rowIndex + j) as XSSFRow;
                     xls_row.CreateCell(0).SetCellValue(Hy(hy.Key));
                     xls_row.GetCell(0).CellStyle = valueStyle_left;
                     xls_row.CreateCell(1).SetCellValue("");

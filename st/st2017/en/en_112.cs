@@ -21,6 +21,10 @@ namespace ST_2017.en
             this.type = "EN";
             this.DES = "";
         }
+        public override bool Sate(string ztName)
+        {
+            return true;
+        }
         public override bool OutPut2Worksheet(XSSFWorkbook xbook)
         {
 
@@ -72,7 +76,7 @@ PIVOT(sum(申请量) for 国家 in({0})) as table2", hy.Key, GetFilter(), GetCou
                     values.Add(year, "0");
                 }
                 #region 创建表格
-                XSSFRow xls_row = sheet.GetRow(rowIndex) as XSSFRow;
+                XSSFRow xls_row = sheet.CreateRow(rowIndex) as XSSFRow;
                 xls_row.CreateCell(0).SetCellValue(Hy(hy.Key));
                 xls_row.GetCell(0).CellStyle = valueStyle_left;
                 for (int j = 0; j < heads.Count; j++)

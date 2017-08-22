@@ -21,6 +21,10 @@ namespace ST_2017.en
             this.type = "EN";
             this.DES = "";
         }
+        public override bool Sate(string ztName)
+        {
+            return true;
+        }
         public override bool OutPut2Worksheet(XSSFWorkbook xbook)
         {
 
@@ -73,11 +77,13 @@ order by 申请量 desc", hy.Key, GetFilter());
                     values.Add(year, "0");
                 }
                 #region 创建表格
-                XSSFRow xls_row = sheet.GetRow(rowIndex ) as XSSFRow;
-                xls_row.GetCell(1).SetCellValue(Hy(hy.Key));
+                XSSFRow xls_row = sheet.CreateRow(rowIndex) as XSSFRow;
+                xls_row.CreateCell(0).SetCellValue(Hy(hy.Key));
+                xls_row.GetCell(0).CellStyle = valueStyle_left;
                 for (int j = 0; j < heads.Count; j++)
                 {
-                    xls_row.GetCell(j + 1).SetCellValue(0);
+                    xls_row.CreateCell(j + 1).SetCellValue(0);
+                    xls_row.GetCell(j + 1).CellStyle = valueStyle;
                 }
                 #endregion
                 #region 赋值
@@ -85,8 +91,10 @@ order by 申请量 desc", hy.Key, GetFilter());
                 {
                     string ady = parow["申请年"].ToString();
                     string count = parow["申请量"].ToString();
-
-                    values[ady] = count;
+                    if (values.ContainsKey(ady))
+                    {
+                        values[ady] = count;
+                    }
                 }
                 int tmpi = 1;
                 foreach (var kv in values)
@@ -103,7 +111,7 @@ order by 申请量 desc", hy.Key, GetFilter());
 
         public override string GetFilter()
         {
-             return $" en.p_c in({config.GuoJia}) ";
+            return $" en.p_c in({config.GuoJia}) ";
         }
     }
 }
