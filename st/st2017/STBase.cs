@@ -203,8 +203,14 @@ namespace ST_2017
 
                     rowIndex++;
                 }
+                MergeCell(xbook);
 
             }
+            return true;
+        }
+
+        public virtual bool MergeCell(XSSFWorkbook xbook)
+        {
             return true;
         }
         public string[,] getgen(Dictionary<string, int> ipc02, Dictionary<string, int> ipc13)
@@ -339,43 +345,9 @@ namespace ST_2017
             return allgen;
 
         }
-        public double GetZZL(Dictionary<int, int> all)
-        {
-            if (all == null) return -0.9999d;
-            if (all.Count == 0) return -0.9999d;
-            double dzzl = 0d;
-            int vf = all.First().Value;
-            int yf = all.First().Key;
-            int vl = all.Last().Value;
-            int yl = all.Last().Value;
-            int years = yl - yf;
-            if (years != 0)
-            {
-                double gen = 1.0 / years;
-                double num = Convert.ToDouble(vl) / vf;
-                dzzl = System.Math.Pow(num, gen) - 1;
 
-            }
-            else
-            {
-                dzzl = -0.9999d;
-            }
-            return dzzl;
-        }
         public string GetZZL1(Dictionary<int, int> all)
         {
-            //do
-            //{
-            //    var first= all.First();
-            //    if (first.Value == 0)
-            //    {
-            //        all.Remove(first.Key);
-            //    }
-            //    else
-            //    {
-            //        break;
-            //    }
-            //} while (true);
             if (all == null) return "N/A";
             if (all.Count == 0) return "N/A";
 
@@ -461,286 +433,7 @@ namespace ST_2017
             }
             return where;
         }
-        public virtual string GetFilter1()
-        {
-            string where = "";
-            if (!string.IsNullOrEmpty(config.GuoJia))
-            {
-                where += " and cn.guojia in(" + config.GuoJia + ")";
-            }
 
-            if (!string.IsNullOrEmpty(config.Sheng))
-            {
-
-                where += " and cn.sheng in(" + config.Sheng + ")";
-            }
-            if (!string.IsNullOrEmpty(config.Shi))
-            {
-                where += " and cn.Shi in (" + config.Shi + ")";
-            }
-            if (!string.IsNullOrEmpty(config.strQuXian))
-            {
-                where += " and cn.Xian in (" + config.strQuXian + ")";
-            }
-            if (!string.IsNullOrEmpty(config.strQuYu))
-            {
-                where += " and cn.QuYu in(" + config.strQuYu + ")";
-            }
-            return where;
-        }
-
-        public virtual string GetFilter2()
-        {
-            string where = "";
-            if (!string.IsNullOrEmpty(config.GuoJia))
-            {
-                where += " and cn.guojia in(" + config.GuoJia + ")";
-            }
-
-            if (!string.IsNullOrEmpty(config.Sheng))
-            {
-                where += " and cn.sheng in(" + config.Sheng + ")";
-            }
-            if (!string.IsNullOrEmpty(config.Shi))
-            {
-                where += " and cn.Shi in (" + config.Shi + ")";
-            }
-            if (!string.IsNullOrEmpty(config.strQuXian))
-            {
-                where += " and cn.Xian in (" + config.strQuXian + ")";
-            }
-            if (!string.IsNullOrEmpty(config.strQuYu))
-            {
-                where += " and cn.QuYu in(" + config.strQuYu + ")";
-            }
-
-            if (!string.IsNullOrEmpty(config.zltype))
-            {
-                where += " and cn.type in(" + config.zltype + ")";
-            }
-
-            if (!string.IsNullOrEmpty(config.strPas))
-            {
-                where += " and cn_pa.pa in(" + config.strPas + ")";
-            }
-            if (!string.IsNullOrEmpty(config.strYears))
-            {
-                where += " and years.y in(" + config.strYears + ")";
-            }
-            return where;
-        }
-
-        public virtual string GetFilter3()
-        {
-            string where = "";
-
-            if (!string.IsNullOrEmpty(config.strYears))
-            {
-                where += " and years.y in(" + config.strYears + ")";
-            }
-            return where;
-        }
-        public virtual string GetFilter5_1()
-        {
-            string where = "";
-            if (!string.IsNullOrEmpty(config.GuoJia))
-            {
-                where += " and cn.guojia in(" + config.GuoJia + ")";
-            }
-
-            if (!string.IsNullOrEmpty(config.Sheng))
-            {
-                where += " and cn.sheng in(" + config.Sheng + ")";
-            }
-            if (!string.IsNullOrEmpty(config.Shi))
-            {
-                where += " and cn.Shi in (" + config.Shi + ")";
-            }
-            if (!string.IsNullOrEmpty(config.strQuXian))
-            {
-                where += " and cn.Xian in (" + config.strQuXian + ")";
-            }
-            if (!string.IsNullOrEmpty(config.strQuYu))
-            {
-                where += " and cn.QuYu in(" + config.strQuYu + ")";
-            }
-
-            if (!string.IsNullOrEmpty(config.zltype))
-            {
-                where += " and cn.type in(" + config.zltype + ")";
-            }
-
-            if (!string.IsNullOrEmpty(config.strPas))
-            {
-                where += " and cn_pa.pa in(" + config.strPas + ")";
-            }
-            return where;
-        }
-        public virtual string GetFilter5()
-        {
-            string where = "";
-            if (!string.IsNullOrEmpty(config.GuoJia))
-            {
-                where += " and cn.guojia in(" + config.GuoJia + ")";
-            }
-
-            if (!string.IsNullOrEmpty(config.Sheng))
-            {
-                where += " and cn.sheng in(" + config.Sheng + ")";
-            }
-            if (!string.IsNullOrEmpty(config.Shi))
-            {
-                where += " and cn.Shi in (" + config.Shi + ")";
-            }
-            if (!string.IsNullOrEmpty(config.strQuXian))
-            {
-                where += " and cn.Xian in (" + config.strQuXian + ")";
-            }
-            if (!string.IsNullOrEmpty(config.strQuYu))
-            {
-                where += " and cn.QuYu in(" + config.strQuYu + ")";
-            }
-
-            if (!string.IsNullOrEmpty(config.zltype))
-            {
-                where += " and cn.type in(" + config.zltype + ")";
-            }
-
-            if (!string.IsNullOrEmpty(config.strPas))
-            {
-                where += " and cn_pa.pa in(" + config.strPas + ")";
-            }
-            if (!string.IsNullOrEmpty(config.strYears))
-            {
-                where += " and cn.ady in(" + config.strYears + ")";
-            }
-            return where;
-        }
-
-        public string GetZZl(string sheng, string ipc, string ztname, string adys, out string zzl)
-        {
-
-            string sqlmin = "";
-
-            sqlmin = string.Format("select ady, count(*) as 数量 from cn_zt as a,cn as b,cn_ipc as c where a.an = b.an  and a.an = c.an and a.ztname in ('{0}') and b.ady in({1}) and c.ipc3='{2}' and b.sheng in('{3}') group by b.ady order by b.ady", ztname, adys, ipc, sheng);
-
-
-            DataTable adsums = DBA.SqlDbAccess.GetDataTable(CommandType.Text, sqlmin);
-            List<int> sums = new List<int>();
-            List<int> values = new List<int>();
-            List<int> lstyear = new List<int>();
-
-            for (int i = 2009; i <= 2013; i++)
-            {
-                var x = from tmp in adsums.AsEnumerable()
-                        where tmp["ady"].ToString() == i.ToString()
-                        select tmp["数量"].ToString();
-                if (x.Count() > 0)
-                {
-                    sums.Add(Convert.ToInt32(x.First()));
-                    lstyear.Add(i);
-                    values.Add(Convert.ToInt32(x.First()));
-                }
-                else
-                {
-                    sums.Add(0);
-                }
-            }
-            if (adsums.Rows.Count > 1)
-            {
-                zzl = "";
-                int vf = values.First();
-                int yf = lstyear.First();
-                int vl = values.Last();
-                int yl = lstyear.Last();
-                int years = yl - yf;
-                if (years != 0)
-                {
-                    double gen = 1.0 / years;
-                    double num = Convert.ToDouble(vl) / vf;
-                    double zs = System.Math.Pow(num, gen) - 1;
-                    zzl = zs.ToString();
-                }
-                else
-                {
-                    zzl = "NA";
-                }
-
-            }
-            else
-            {
-                zzl = "NA";
-            }
-            string strvalues = "";
-            foreach (var s in sums)
-            {
-                strvalues += s + ",";
-            }
-            strvalues = strvalues.Trim(',');
-            return strvalues;
-        }
-        public string GetZZl_IPC4(string sheng, string ipc, string ztname, string adys, out string zzl)
-        {
-
-            string sqlmin = "";
-
-            sqlmin = string.Format("select ady, count(*) as 数量 from cn_zt as a,cn as b,cn_ipc as c where a.an = b.an  and a.an = c.an and a.ztname in ('{0}') and b.ady in({1}) and c.ipc4='{2}' and b.sheng in('{3}') group by b.ady order by b.ady", ztname, adys, ipc, sheng);
-
-
-            DataTable adsums = DBA.SqlDbAccess.GetDataTable(CommandType.Text, sqlmin);
-            List<int> sums = new List<int>();
-            List<int> values = new List<int>();
-            List<int> lstyear = new List<int>();
-
-            for (int i = 2009; i <= 2013; i++)
-            {
-                var x = from tmp in adsums.AsEnumerable()
-                        where tmp["ady"].ToString() == i.ToString()
-                        select tmp["数量"].ToString();
-                if (x.Count() > 0)
-                {
-                    sums.Add(Convert.ToInt32(x.First()));
-                    lstyear.Add(i);
-                    values.Add(Convert.ToInt32(x.First()));
-                }
-                else
-                {
-                    sums.Add(0);
-                }
-            }
-            if (adsums.Rows.Count > 1)
-            {
-                zzl = "";
-                int vf = values.First();
-                int yf = lstyear.First();
-                int vl = values.Last();
-                int yl = lstyear.Last();
-                int years = yl - yf;
-                if (years != 0)
-                {
-                    double gen = 1.0 / years;
-                    double num = Convert.ToDouble(vl) / vf;
-                    double zs = System.Math.Pow(num, gen) - 1;
-                    zzl = zs.ToString();
-                }
-                else
-                {
-                    zzl = "NA";
-                }
-
-            }
-            else
-            {
-                zzl = "NA";
-            }
-            string strvalues = "";
-            foreach (var s in sums)
-            {
-                strvalues += s + ",";
-            }
-            strvalues = strvalues.Trim(',');
-            return strvalues;
-        }
         private Dictionary<string, string> hys = new Dictionary<string, string>();
         public Dictionary<string, string> Hys
         {
@@ -805,6 +498,15 @@ namespace ST_2017
             set { hys = value; }
         }
 
+        public string Hy(string id)
+        {
+            if (hys.ContainsKey(id))
+            {
+                return $"{id.PadLeft(2, '0')}.{hys[id]}";
+            }
+            return id;
+        }
+
 
         private Dictionary<string, string> dicHys = new Dictionary<string, string>();
         public Dictionary<string, string> DicHys
@@ -812,7 +514,7 @@ namespace ST_2017
             get
             {
                 if (dicHys.Count == 0)
-                {   
+                {
                     dicHys.Add("01.农业", "'91'");
                     dicHys.Add("02.林业", "'92'");
                     dicHys.Add("03.畜牧业", "'93'");
@@ -868,7 +570,7 @@ namespace ST_2017
                     dicHys.Add("采矿业", "'4','8','12','16','20','21','22'");
                     dicHys.Add("制造业", "'25','26','30','31','32','33','34','35','36','37','38','41','42','47','48','49','195','50','51','52','53','54','59','60','66','69','73','76','81','84'");
                     dicHys.Add("生产和供应业", "'85','89','90'");
-                    dicHys.Add("装备制造业", "'59','60','66','69','73','76','81','84'");                    
+                    dicHys.Add("装备制造业", "'59','60','66','69','73','76','81','84'");
 
                 }
                 return dicHys;
@@ -876,66 +578,100 @@ namespace ST_2017
             }
         }
 
-        public string ztname { get; set; }
 
-        public string zltype
+        public static DataTable ReadDateTable(DataTable dt)
         {
-            get
+            int pryear = 0;
+            for (int i = dt.Rows.Count - 1; i >= 0; i--)
             {
-                throw new NotImplementedException();
+                if (dt.Rows[i]["年代"].ToString().Trim() == string.Empty)
+                {
+                    dt.Rows.RemoveAt(i);
+                }
+                else
+                {
+                    int year = Convert.ToInt32(dt.Rows[i]["年代"].ToString());
+                    if (pryear == 0)
+                    {
+                        pryear = year;
+                        continue;
+                    }
+                    for (int j = pryear + 1; j < year; j++)
+                    {
+                        DataRow tmprow = dt.NewRow();
+                        tmprow[0] = j;
+                        for (int m = 1; m < dt.Columns.Count; m++)
+                        {
+                            tmprow[m] = 0;
+                        }
+                        dt.Rows.InsertAt(tmprow, i + 1);
+                    }
+                    pryear = year;
+                }
             }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            return dt;
         }
 
-        public string Sheng
+        public static DataTable AddSumRow(DataTable dt)
         {
-            get
+
+            DataRow row1 = dt.NewRow();
+
+            for (int j = 1; j < dt.Columns.Count; j++)
             {
-                throw new NotImplementedException();
+                double count1 = 0;
+                //if (dt.Columns[j].DataType == typeof(String)) continue;
+                try
+                {
+                    foreach (DataRow tmp in dt.Rows)
+                    {
+                        double tmpd = 0d;
+                        double.TryParse(tmp[j].ToString(), out tmpd);
+                        count1 += tmpd;
+                    }
+                    row1[j] = count1;
+                }
+                catch (Exception e)
+                {
+                    row1[j] = null;
+                }
+
             }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            row1[0] = "合计：";
+            dt.Rows.Add(row1);
+            return dt;
         }
 
-        public string Shi
+        public static DataTable TopNumRow(DataTable dt, int TOPNum)
         {
-            get
+            DataRow row = dt.NewRow();
+            row[0] = "其它";
+            double count = 0;
+            for (int j = 1; j < dt.Columns.Count; j++)
             {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+                try
+                {
+                    for (int i = dt.Rows.Count - 1; i >= TOPNum; i--)
+                    {
+                        count += Convert.ToDouble(dt.Rows[i][j].ToString());
 
-        public string GuoJia
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+                    }
 
-        public string city
-        {
-            get
-            {
-                throw new NotImplementedException();
+                    row[j] = count;
+                }
+                catch (Exception e)
+                {
+                    row[j] = "";
+                }
             }
-            set
+            for (int i = dt.Rows.Count - 1; i >= TOPNum; i--)
             {
-                throw new NotImplementedException();
+
+                dt.Rows.RemoveAt(i);
             }
+            dt.Rows.Add(row);
+            return dt;
+
         }
     }
 }

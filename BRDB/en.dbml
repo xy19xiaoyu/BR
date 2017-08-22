@@ -56,4 +56,11 @@
       <Column Name="pdy" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.en_zt" Member="en_zt">
+    <Type Name="en_zt">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="pn" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="zt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>

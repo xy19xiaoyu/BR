@@ -25,7 +25,7 @@ namespace BRDB.Helper
                 hyids.Add(id);
             }
 
-            return hyids.Where(x => !string.IsNullOrEmpty(x)).Distinct().ToList<string>();
+            return hyids.Distinct().ToList<string>();
         }
 
         public static List<hy> IniHys()

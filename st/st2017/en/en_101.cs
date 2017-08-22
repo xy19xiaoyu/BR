@@ -6,33 +6,41 @@ using System.Text;
 using ST_2017.Interface;
 using System.Data;
 
-namespace ST_2017.cn
+namespace ST_2017.en
 {
-    public class cn_01 : ST_Base
+    public class en_101 : ST_Base
     {
 
-        public cn_01()
+        public en_101()
         {
-            this.Id = 1;
+            this.Id = 101;
             this.Name = "专利申请情况";
-            this.type = "CN";
+            this.type = "EN";
             this.DES = "";
         }
         public override bool Sate(string ztName)
         {
             Console.WriteLine("正在生成表：{0}\t{1}\t{2}\t{3}", ztName, this.config.FileName, this.Name, DateTime.Now.ToString());
             string sql = @"
-select * from (select
- city as 国家
-,count(*)  申请量
-from cn
-group by city) as a1
-PIVOT(sum(申请量) for 国家 in([ID],[RS],[UA])) as table2
+select
+	ady as 申请年, 
+	count(distinct an) 申请量
+from 
+	en
+where 
+	{0}
+group by 
+	p_c,ady
 ";
-           
-            dt = DBA.SqlDbAccess.GetDataTable(CommandType.Text, sql);
+
+            string exe_sql = string.Format(sql, GetFilter());
+            dt = DBA.SqlDbAccess.GetDataTable(CommandType.Text, exe_sql);
             return true;
         }
 
+        public override string GetFilter()
+        {
+            return $" en.p_c in({config.GuoJias}) ";
+        }
     }
 }

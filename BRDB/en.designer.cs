@@ -45,6 +45,9 @@ namespace BRDB
     partial void Inserten(en instance);
     partial void Updateen(en instance);
     partial void Deleteen(en instance);
+    partial void Inserten_zt(en_zt instance);
+    partial void Updateen_zt(en_zt instance);
+    partial void Deleteen_zt(en_zt instance);
     #endregion
 		
 		public enDataContext() : 
@@ -114,6 +117,14 @@ namespace BRDB
 			get
 			{
 				return this.GetTable<en>();
+			}
+		}
+		
+		public System.Data.Linq.Table<en_zt> en_zt
+		{
+			get
+			{
+				return this.GetTable<en_zt>();
 			}
 		}
 	}
@@ -1147,6 +1158,116 @@ namespace BRDB
 					this._pdy = value;
 					this.SendPropertyChanged("pdy");
 					this.OnpdyChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.en_zt")]
+	public partial class en_zt : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _pn;
+		
+		private System.Nullable<int> _zt;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnpnChanging(string value);
+    partial void OnpnChanged();
+    partial void OnztChanging(System.Nullable<int> value);
+    partial void OnztChanged();
+    #endregion
+		
+		public en_zt()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pn", DbType="VarChar(20)")]
+		public string pn
+		{
+			get
+			{
+				return this._pn;
+			}
+			set
+			{
+				if ((this._pn != value))
+				{
+					this.OnpnChanging(value);
+					this.SendPropertyChanging();
+					this._pn = value;
+					this.SendPropertyChanged("pn");
+					this.OnpnChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_zt", DbType="Int")]
+		public System.Nullable<int> zt
+		{
+			get
+			{
+				return this._zt;
+			}
+			set
+			{
+				if ((this._zt != value))
+				{
+					this.OnztChanging(value);
+					this.SendPropertyChanging();
+					this._zt = value;
+					this.SendPropertyChanged("zt");
+					this.OnztChanged();
 				}
 			}
 		}
