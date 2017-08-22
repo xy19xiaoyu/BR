@@ -71,10 +71,13 @@ namespace ST_2017.en
                 #region 创建表格
                 for (int j = 0; j < 10; j++)
                 {
-                    XSSFRow xls_row = sheet.GetRow(rowIndex + j) as XSSFRow;
-                    xls_row.GetCell(1).SetCellValue(GJ);
-                    xls_row.GetCell(1).SetCellValue("");
-                    xls_row.GetCell(2).SetCellValue(0);
+                    XSSFRow xls_row = sheet.GetRow(rowIndex + j) as XSSFRow;              
+                    xls_row.CreateCell(0).SetCellValue(GJ);
+                    xls_row.GetCell(0).CellStyle = valueStyle_left;
+                    xls_row.CreateCell(1).SetCellValue("");
+                    xls_row.GetCell(1).CellStyle = valueStyle_left;
+                    xls_row.CreateCell(2).SetCellValue(0);
+                    xls_row.GetCell(2).CellStyle = valueStyle;
                 }
                 sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + 9, 0, 0));
                 #endregion

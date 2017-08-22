@@ -73,10 +73,12 @@ PIVOT(sum(申请量) for 国家 in({0})) as table2", hy.Key, GetFilter(), GetCou
                 }
                 #region 创建表格
                 XSSFRow xls_row = sheet.GetRow(rowIndex) as XSSFRow;
-                xls_row.GetCell(1).SetCellValue(Hy(hy.Key));
+                xls_row.CreateCell(0).SetCellValue(Hy(hy.Key));
+                xls_row.GetCell(0).CellStyle = valueStyle_left;
                 for (int j = 0; j < heads.Count; j++)
                 {
                     xls_row.GetCell(j + 1).SetCellValue(0);
+                    xls_row.GetCell(j + 1).CellStyle = valueStyle;
                 }
                 #endregion
                 #region 赋值

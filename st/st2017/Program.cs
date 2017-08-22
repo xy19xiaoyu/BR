@@ -21,7 +21,8 @@ namespace ST_2017
 
 
             List<StatConfig> configs = new List<StatConfig>();
-            configs.AddRange(Config1());
+            //configs.AddRange(Config1());
+            configs.AddRange(ConfigEN());
             foreach (var config in configs)
             {
                 StateManager st = new StateManager(config);
@@ -66,7 +67,7 @@ namespace ST_2017
                 Tables = new List<int>() { 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113 },
                 ZLTypes = new List<string>(),
                 ZTNames = new List<string>(),
-                Years = new List<string>() { "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017" }
+                Years = new List<string>() { "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017" },
                 Top5Guojia = new List<string>() { "DE", "FR", "CH", "US", "JP" }
             };
 

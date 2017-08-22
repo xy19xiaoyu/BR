@@ -21,6 +21,10 @@ namespace ST_2017.en
             this.type = "EN";
             this.DES = "";
         }
+        public override bool Sate(string ztName)
+        {
+            return true;
+        }
         public override bool OutPut2Worksheet(XSSFWorkbook xbook)
         {
 
@@ -74,11 +78,15 @@ namespace ST_2017.en
                 #region 创建表格
                 for (int j = 0; j < 10; j++)
                 {
-                    XSSFRow xls_row = sheet.GetRow(rowIndex  + j) as XSSFRow;
-                    xls_row.GetCell(1).SetCellValue(Hy(hy.Key));
-                    xls_row.GetCell(1).SetCellValue("");
-                    xls_row.GetCell(2).SetCellValue(0);
+                    XSSFRow xls_row = sheet.GetRow(rowIndex + j) as XSSFRow;
+                    xls_row.CreateCell(0).SetCellValue(Hy(hy.Key));
+                    xls_row.GetCell(0).CellStyle = valueStyle_left;
+                    xls_row.CreateCell(1).SetCellValue("");
+                    xls_row.GetCell(1).CellStyle = valueStyle_left;
+                    xls_row.CreateCell(2).SetCellValue(0);
+                    xls_row.GetCell(2).CellStyle = valueStyle;
                 }
+
                 sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + 9, 0, 0));
                 #endregion
                 #region 赋值
@@ -102,7 +110,7 @@ namespace ST_2017.en
 
         public override string GetFilter()
         {
-             return $" en.p_c in({config.GuoJia}) ";
+            return $" en.p_c in({config.GuoJia}) ";
         }
     }
 }
