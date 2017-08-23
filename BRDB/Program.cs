@@ -18,8 +18,8 @@ namespace BRDB
         {
 
             ExchangeBiblioWPI();
-            ExchangeIPCWPI();
-            ExchangeENhy();
+            //ExchangeIPCWPI();
+            //ExchangeENhy();
 
 
             //ExchangeCNhy();
@@ -94,46 +94,59 @@ namespace BRDB
             }
 
         }
-
+        //bcp ExtractData.dbo.en_pa in d:\en_pa.txt -Usa -Psa@123456 -c -t"|"
         public static void ExchangeBiblioWPI()
         {
             long maxid = en.DocInfo_Dwpi.Max(x => x.ID);
             long loop = maxid / 1000;
-
-            for (int i = 0; i < loop + 1; i++)
+            using (StreamWriter sw = new StreamWriter("D:\\en_pa.txt", false, Encoding.GetEncoding("utf-8")))
             {
-                if (i * 1000 > maxid) break;
-                List<DocInfo_Dwpi> docinfos = en.DocInfo_Dwpi.Skip(i * 1000).Take(1000).ToList<DocInfo_Dwpi>();
-                foreach (var doc in docinfos)
+                for (int i = 0; i < loop + 1; i++)
                 {
-
-                    var tmp_en = new en()
+                    if (i * 1000 > maxid) break;
+                    List<DocInfo_Dwpi> docinfos = en.DocInfo_Dwpi.Skip(i * 1000).Take(1000).ToList<DocInfo_Dwpi>();
+                    foreach (var doc in docinfos)
                     {
-                        pn = doc.PubID,
-                        an = doc.AppNo,
-                        i_c = GetFistrPRCountry(doc.PubID),
-                        p_c = doc.PubID.Left(2),
-                        ady = doc.AppDate.Left(4).to_i(),
-                        pdy = doc.PubDate.Left(4).to_i(),
-                        ti = doc.Title.Left(500)
-                    };
-                    en.en.InsertOnSubmit(tmp_en);
+
+                        //var tmp_en = new en()
+                        //{
+                        //    pn = doc.PubID,
+                        //    an = doc.AppNo,
+                        //    i_c = GetFistrPRCountry(doc.PubID),
+                        //    p_c = doc.PubID.Left(2),
+                        //    ady = doc.AppDate.Left(4).to_i(),
+                        //    pdy = doc.PubDate.Left(4).to_i(),
+                        //    ti = doc.Title.Left(500)
+                        //};
+                        //en.en.InsertOnSubmit(tmp_en);
 
 
-                    string[] pas = doc.Applicants.Split(";&".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                    foreach (var strpa in pas)
-                    {
-                        var pa = new en_pa()
+                        //string[] pas = doc.Applicants.Split(";&".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        //foreach (var strpa in pas)
+                        //{
+                        //    var pa = new en_pa()
+                        //    {
+                        //        pn = doc.PubNo,
+                        //        pa = strpa
+                        //    };
+                        //    en.en_pa.InsertOnSubmit(pa);
+                        //}
+
+                        string[] pas = doc.Applicants.Split(";&".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        foreach (var strpa in pas)
                         {
-                            pn = doc.PubDate,
-                            pa = strpa
-                        };
-                        en.en_pa.InsertOnSubmit(pa);
+                            var pa = new en_pa()
+                            {
+                                pn = doc.PubNo,
+                                pa = strpa
+                            };
+                            sw.WriteLine($"0|{doc.PubID.Left(20).Replace("|", "")}|{strpa.Left(100).Replace("”", "").Replace("“", "").Replace("Č", "").Replace("\n", "").Replace("\r", "").Replace("|", "")}");
+                            // en.en_pa.InsertOnSubmit(pa);
+                        }
                     }
+                    en.SubmitChanges();
+                    Console.WriteLine($"{i} /{loop + 1}  -{DateTime.Now}");
                 }
-                en.SubmitChanges();
-                Console.WriteLine($"{i} /{loop + 1}  -{DateTime.Now}");
-
             }
 
         }
@@ -167,7 +180,7 @@ namespace BRDB
                         {
                             var pa = new en_pa()
                             {
-                                pn = doc.PubDate,
+                                pn = doc.PubNo,
                                 pa = strpa
                             };
                             sw.WriteLine($"0|{doc.PubID.Left(20).Replace("|", "")}|{strpa.Left(100).Replace("”", "").Replace("“", "").Replace("Č", "").Replace("\n", "").Replace("\r", "").Replace("|", "")}");
