@@ -68,7 +68,7 @@ namespace ST_2017.en
 	                    and en.i_c in('{0}')
 	                    and {1}
                     group by
-	                    en_pa.pa
+	                     en_ipc.ipc4 
                     order by 申请量 desc", GJ, GetFilter());
                 DataTable dtpas = DBA.SqlDbAccess.GetDataTable(CommandType.Text, pas);
                 #endregion

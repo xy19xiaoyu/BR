@@ -35,7 +35,7 @@ select * from (
 		{0}
 	group by 
 	    i_c,ady) as a1
-PIVOT(sum(申请量) for 国家 in({1}) as table2
+PIVOT(sum(申请量) for 国家 in({1})) as table2
 order by 申请年
 ";
 
@@ -46,13 +46,13 @@ order by 申请年
 
         public override string GetFilter()
         {
-            return $" p_c in({config.GuoJia} and  i_c  in ({config.StrTop5Guojia})";
+            return $" p_c in({config.GuoJia}) and  i_c  in ({config.StrTop5Guojia})";
         }
 
         public string GetCountry()
         {
             StringBuilder sb = new StringBuilder();
-            foreach (var gj in config.GuoJias)
+            foreach (var gj in config.Top5Guojia)
             {
                 sb.Append($"[{gj}],");
             }

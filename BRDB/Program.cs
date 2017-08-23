@@ -17,8 +17,8 @@ namespace BRDB
         static void Main(string[] args)
         {
 
-            ExchangeBiblio();
-            //ExchangeENhy();
+            // ExchangeBiblio();
+            ExchangeENhy();
 
 
             //ExchangeCNhy();
@@ -32,11 +32,11 @@ namespace BRDB
             long maxid = en.en_ipc.Max(x => x.id);
             long loop = maxid / step;
 
-            using (StreamWriter sw = new StreamWriter("en_zt.txt")) //还是bcp 文件导入快
+            using (StreamWriter sw = new StreamWriter("d:\\en_zt.txt", false, Encoding.GetEncoding("utf-8"))) //还是bcp 文件导入快
             {
                 for (int i = 0; i < loop + 1; i++)
                 {
-                    if (i * 10000 > maxid) break;
+                    if (i * step > maxid) break;
                     List<en_ipc> ipcs = en.en_ipc.Skip(i * step).Take(step).ToList<en_ipc>();
                     List<en_zt> zts = new List<en_zt>();
                     foreach (var ipc in ipcs)

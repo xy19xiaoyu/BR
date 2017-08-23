@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using ST_2017.Interface;
 using System.Data;
+using NPOI.XSSF.UserModel;
+using NPOI.SS.UserModel;
 
 namespace ST_2017.en
 {
@@ -37,10 +39,22 @@ where
             dt = DBA.SqlDbAccess.GetDataTable(CommandType.Text, exe_sql);
             return true;
         }
+        public override bool MergeCell(XSSFWorkbook xbook)
+        {
+            ISheet sheet = xbook.GetSheet(this.Name);
+            sheet.SetColumnWidth(2, 180 * 256);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                XSSFRow xls_row = sheet.GetRow(i + 1) as XSSFRow;
+                xls_row.GetCell(2).CellStyle = valueStyle_left;
+            }
+
+            return true;
+        }
 
         public override string GetFilter()
         {
-             return $" en.p_c in({config.GuoJia}) ";
+            return $" en.p_c in({config.GuoJia}) ";
         }
     }
 }

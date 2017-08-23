@@ -29,7 +29,7 @@ namespace ST_2017.en
         {
 
             List<string> heads = new List<string> { "行业" };
-            heads.AddRange(config.GuoJias);
+            heads.AddRange(config.Top5Guojia);
 
             Console.WriteLine("开始出表：{0} ", Name);
 
@@ -61,38 +61,43 @@ select * from (
 		en.i_c as 国家,
 		COUNT(distinct en.an) as 申请量
 	from
-		en
+		en,
+        en_zt
 	where 
-		{0}
+        en.pn = en_zt.pn
+		and en_zt.zt ={0}
+        and {1}
 	group by
 		en.i_c
 ) as a
-PIVOT(sum(申请量) for 国家 in({0})) as table2", hy.Key, GetFilter(), GetCountry());
+PIVOT(sum(申请量) for 国家 in({2})) as table2", hy.Key, GetFilter(), GetCountry());
                 DataTable dtpas = DBA.SqlDbAccess.GetDataTable(CommandType.Text, pas);
                 #endregion
                 Dictionary<string, string> values = new Dictionary<string, string>();
-                foreach (var year in config.Years)
+                foreach (var guojia in config.Top5Guojia)
                 {
-                    values.Add(year, "0");
+                    values.Add(guojia, "0");
                 }
                 #region 创建表格
                 XSSFRow xls_row = sheet.CreateRow(rowIndex) as XSSFRow;
                 xls_row.CreateCell(0).SetCellValue(Hy(hy.Key));
                 xls_row.GetCell(0).CellStyle = valueStyle_left;
-                for (int j = 0; j < heads.Count; j++)
+                for (int j = 0; j < config.Top5Guojia.Count; j++)
                 {
-                    xls_row.GetCell(j + 1).SetCellValue(0);
+                    xls_row.CreateCell(j + 1).SetCellValue(0);
                     xls_row.GetCell(j + 1).CellStyle = valueStyle;
                 }
                 #endregion
                 #region 赋值
-                int tmpi = 1;
-                foreach (DataRow parow in dtpas.Rows)
+
+                if (dtpas.Rows.Count > 0)
                 {
-                    string ady = parow["国家"].ToString();
-                    string count = parow["申请量"].ToString();
-                    xls_row.GetCell(tmpi).SetCellValue(count);
-                    tmpi++;
+                    int tmpi = 1;
+                    foreach (string gj in config.Top5Guojia)
+                    {
+                        xls_row.GetCell(tmpi).SetCellValue(dtpas.Rows[0][gj].ToString().to_i());
+                        tmpi++;
+                    }
                 }
                 #endregion
                 rowIndex++;
@@ -104,16 +109,16 @@ PIVOT(sum(申请量) for 国家 in({0})) as table2", hy.Key, GetFilter(), GetCou
 
         public override string GetFilter()
         {
-            return $" p_c in({config.GuoJia} and  i_c  in ({config.StrTop5Guojia})";
+            return $" p_c in({config.GuoJia}) and  i_c  in ({config.StrTop5Guojia})";
         }
 
         public string GetCountry()
-        {            
+        {
             StringBuilder sb = new StringBuilder();
-            foreach (var gj in config.GuoJias)
+            foreach (var gj in config.Top5Guojia)
             {
                 sb.Append($"[{gj}],");
-            }            
+            }
             return sb.ToString(0, sb.Length - 1);
         }
     }

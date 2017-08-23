@@ -21,7 +21,7 @@ namespace ST_2017.en
             this.type = "EN";
             this.DES = "";
         }
-          public override bool Sate(string ztName)
+        public override bool Sate(string ztName)
         {
             return true;
         }
@@ -31,7 +31,7 @@ namespace ST_2017.en
             string[] heads = new string[] { "国家", "重点申请人", "申请量" };
 
             Console.WriteLine("开始出表：{0} ", Name);
-
+            int topnumber = 50;
 
             ISheet sheet = xbook.CreateSheet(this.Name);
             IniStryle(xbook);
@@ -52,12 +52,12 @@ namespace ST_2017.en
             sheet.SetColumnWidth(1, 40 * 256);
             #endregion
             rowIndex = 1;
-            foreach (var GJ in config.GuoJias)
+            foreach (var GJ in config.Top5Guojia)
             {
                 #region 获取申请国申请人
                 string pas = string.Format(@"
                     select
-	                    top 10
+	                    top {2}
 	                    en_pa.pa as 申请人,
 	                    COUNT(distinct en.an) as 申请量
                     from
@@ -69,13 +69,13 @@ namespace ST_2017.en
 	                    and {1}
                     group by
 	                    en_pa.pa
-                    order by 申请量 desc", GJ, GetFilter());
+                    order by 申请量 desc", GJ, GetFilter(), topnumber);
                 DataTable dtpas = DBA.SqlDbAccess.GetDataTable(CommandType.Text, pas);
                 #endregion
                 #region 创建表格
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < topnumber; j++)
                 {
-                    XSSFRow xls_row = sheet.CreateRow(rowIndex + j) as XSSFRow;              
+                    XSSFRow xls_row = sheet.CreateRow(rowIndex + j) as XSSFRow;
                     xls_row.CreateCell(0).SetCellValue(GJ);
                     xls_row.GetCell(0).CellStyle = valueStyle_left;
                     xls_row.CreateCell(1).SetCellValue("");
@@ -83,7 +83,7 @@ namespace ST_2017.en
                     xls_row.CreateCell(2).SetCellValue(0);
                     xls_row.GetCell(2).CellStyle = valueStyle;
                 }
-                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + 9, 0, 0));
+                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + topnumber - 1, 0, 0));
                 #endregion
                 #region 赋值
                 int tmpindex = 0;
@@ -98,7 +98,7 @@ namespace ST_2017.en
                     tmpindex++;
                 }
                 #endregion
-                rowIndex += 10;
+                rowIndex += topnumber;
                 Console.WriteLine(this.Name + "\t" + GJ);
             }
             Console.WriteLine("结束出表：{0} ", Name);
@@ -107,8 +107,8 @@ namespace ST_2017.en
 
         public override string GetFilter()
         {
-             return $" en.p_c in({config.GuoJia}) ";
+            return $" en.p_c in({config.GuoJia}) ";
         }
-      
+
     }
 }

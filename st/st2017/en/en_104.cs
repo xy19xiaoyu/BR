@@ -103,6 +103,7 @@ namespace ST_2017.en
                 }
                 #endregion
                 Console.WriteLine(this.Name + "\t" + hy.Value);
+                rowIndex += 10;
             }
             Console.WriteLine("结束出表：{0} ", Name);
             return true;

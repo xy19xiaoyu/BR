@@ -80,7 +80,7 @@ order by 申请量 desc", hy.Key, GetFilter());
                 XSSFRow xls_row = sheet.CreateRow(rowIndex) as XSSFRow;
                 xls_row.CreateCell(0).SetCellValue(Hy(hy.Key));
                 xls_row.GetCell(0).CellStyle = valueStyle_left;
-                for (int j = 0; j < heads.Count; j++)
+                for (int j = 0; j < config.Years.Count; j++)
                 {
                     xls_row.CreateCell(j + 1).SetCellValue(0);
                     xls_row.GetCell(j + 1).CellStyle = valueStyle;
@@ -104,6 +104,7 @@ order by 申请量 desc", hy.Key, GetFilter());
                 }
                 #endregion
                 Console.WriteLine(this.Name + "\t" + hy.Value);
+                rowIndex++;
             }
             Console.WriteLine("结束出表：{0} ", Name);
             return true;
