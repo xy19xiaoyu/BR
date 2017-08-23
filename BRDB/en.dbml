@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ExtractData" Class="enDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-JLKLR7U;Initial Catalog=ExtractData;Persist Security Info=True;User ID=sa" SettingsObjectName="BRDB.Properties.Settings" SettingsPropertyName="ExtractDataConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost;Initial Catalog=ExtractData;User ID=sa" SettingsObjectName="BRDB.Properties.Settings" SettingsPropertyName="ExtractDataConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.en_zt" Member="en_zt">
+    <Type Name="en_zt">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="pn" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="zt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.DocInfo" Member="DocInfo">
     <Type Name="DocInfo">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -18,6 +25,76 @@
       <Column Name="DocdbAppNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Priority_Dwpi" Member="Priority_Dwpi">
+    <Type Name="Priority_Dwpi">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PubID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Sequence" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PriorityNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PriorityDate" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DocInfo_Dwpi" Member="DocInfo_Dwpi">
+    <Type Name="DocInfo_Dwpi">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DocId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="PubID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PubDate" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="AppNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AppDate" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Applicants" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ApplicantCountry" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Inventors" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Abstract" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PubNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="OriginalAppNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DocdbAppNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Dwpi" Member="Dwpi">
+    <Type Name="Dwpi">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Country" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="PN" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="TI" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AU" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AE" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="GA" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AB" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="TF" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="EA" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="DC" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="MC" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="IP" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PD" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AD" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="FD" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PI" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="DS" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="FS" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CP" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CR" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="DN" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="MN" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="RI" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CI" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="RG" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SourceFile" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.en" Member="en">
+    <Type Name="en">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="pn" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="an" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="p_c" Type="System.String" DbType="Char(2)" CanBeNull="true" />
+      <Column Name="i_c" Type="System.String" DbType="Char(2)" CanBeNull="true" />
+      <Column Name="ady" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="pdy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ti" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.en_ipc" Member="en_ipc">
     <Type Name="en_ipc">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -34,7 +111,14 @@
     <Type Name="en_pa">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="pn" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="pa" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="pa" Type="System.String" DbType="VarChar(400)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.en_zt" Member="en_zt1">
+    <Type Name="en_zt1">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="pn" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="zt" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.Ipc" Member="Ipc">
@@ -45,22 +129,21 @@
       <Column Name="IPC" Member="IPC1" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.en" Member="en">
-    <Type Name="en">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="pn" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="an" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="p_c" Type="System.String" DbType="Char(2)" CanBeNull="true" />
-      <Column Name="i_c" Type="System.String" DbType="Char(2)" CanBeNull="true" />
-      <Column Name="ady" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="pdy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+  <Table Name="dbo.Ipc_Dwpi" Member="Ipc_Dwpi">
+    <Type Name="Ipc_Dwpi">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PubID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Sequence" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IPC" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.en_zt" Member="en_zt">
-    <Type Name="en_zt">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="pn" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="zt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+  <Table Name="dbo.Priority" Member="Priority">
+    <Type Name="Priority">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PubID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Sequence" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PriorityNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PriorityDate" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

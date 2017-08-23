@@ -17,7 +17,8 @@ namespace BRDB
         static void Main(string[] args)
         {
 
-            // ExchangeBiblio();
+            ExchangeBiblioWPI();
+            ExchangeIPCWPI();
             ExchangeENhy();
 
 
@@ -76,11 +77,66 @@ namespace BRDB
                     }
 
                 }
-                Console.WriteLine($"{i} -{DateTime.Now}");
+                Console.WriteLine($"{i} /{loop + 1}  -{DateTime.Now}");
                 cn.SubmitChanges();
             }
         }
 
+        public static string GetFistrPRCountry(string pubno)
+        {
+            try
+            {
+                return en.Priority_Dwpi.Where(x => x.PubID == pubno).First().PriorityNo.Left(2);
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+
+        }
+
+        public static void ExchangeBiblioWPI()
+        {
+            long maxid = en.DocInfo_Dwpi.Max(x => x.ID);
+            long loop = maxid / 1000;
+
+            for (int i = 0; i < loop + 1; i++)
+            {
+                if (i * 1000 > maxid) break;
+                List<DocInfo_Dwpi> docinfos = en.DocInfo_Dwpi.Skip(i * 1000).Take(1000).ToList<DocInfo_Dwpi>();
+                foreach (var doc in docinfos)
+                {
+
+                    var tmp_en = new en()
+                    {
+                        pn = doc.PubID,
+                        an = doc.AppNo,
+                        i_c = GetFistrPRCountry(doc.PubID),
+                        p_c = doc.PubID.Left(2),
+                        ady = doc.AppDate.Left(4).to_i(),
+                        pdy = doc.PubDate.Left(4).to_i(),
+                        ti = doc.Title.Left(500)
+                    };
+                    en.en.InsertOnSubmit(tmp_en);
+
+
+                    string[] pas = doc.Applicants.Split(";&".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var strpa in pas)
+                    {
+                        var pa = new en_pa()
+                        {
+                            pn = doc.PubDate,
+                            pa = strpa
+                        };
+                        en.en_pa.InsertOnSubmit(pa);
+                    }
+                }
+                en.SubmitChanges();
+                Console.WriteLine($"{i} /{loop + 1}  -{DateTime.Now}");
+
+            }
+
+        }
         public static void ExchangeBiblio()
         {
             long maxid = en.DocInfo.Max(x => x.ID);
@@ -127,7 +183,33 @@ namespace BRDB
         }
 
 
+        public static void ExchangeIPCWPI()
+        {
+            long maxid = en.Ipc_Dwpi.Max(x => x.ID);
+            long loop = maxid / 1000;
 
+            for (int i = 0; i < loop + 1; i++)
+            {
+                if (i * 1000 > maxid) break;
+                List<Ipc_Dwpi> ipcs = en.Ipc_Dwpi.Skip(i * 1000).Take(1000).ToList<Ipc_Dwpi>();
+                foreach (var ipc in ipcs)
+                {
+                    string stripc = ipc.IPC.Replace(" ", "").FormatIPC();
+                    var tmpipc = new en_ipc()
+                    {
+                        pn = ipc.PubID,
+                        ipc = stripc,
+                        ipc1 = stripc[0],
+                        ipc3 = stripc.Left(3),
+                        ipc4 = stripc.Left(4),
+                        ipc7 = stripc.Left(7)
+                    };
+                    en.en_ipc.InsertOnSubmit(tmpipc);
+                }
+                Console.WriteLine($"{i} /{loop + 1}  -{DateTime.Now}");
+                en.SubmitChanges();
+            }
+        }
 
         public static void ExchangeIPC()
         {
@@ -152,7 +234,7 @@ namespace BRDB
                     };
                     en.en_ipc.InsertOnSubmit(tmpipc);
                 }
-                Console.WriteLine($"{i} -{DateTime.Now}");
+                Console.WriteLine($"{i} /{loop + 1}  -{DateTime.Now}");
                 en.SubmitChanges();
             }
         }
