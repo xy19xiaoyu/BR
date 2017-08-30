@@ -86,7 +86,7 @@ namespace BRDB
         {
             try
             {
-                return en.Priority_Dwpi.Where(x => x.PubID == pubno).First().PriorityNo.Left(2);
+                return en.Priority_Dwpi.Where(x => x.PubID == pubno && x.Sequence ==1).First().PriorityNo.Left(2);
             }
             catch (Exception ex)
             {
@@ -109,6 +109,7 @@ namespace BRDB
                     List<DocInfo_Dwpi> docinfos = en.DocInfo_Dwpi.Skip(i * 1000).Take(1000).ToList<DocInfo_Dwpi>();
                     foreach (var doc in docinfos)
                     {
+<<<<<<< HEAD
                         sw_en.WriteLine($"0|{doc.PubID}|{doc.AppNo}|{GetFistrPRCountry(doc.PubID)}|{doc.PubID.Left(2)}|{doc.AppDate.Left(4).to_i()}|{doc.PubDate.Left(4).to_i()}");
                         sw_en_tiabs.WriteLine($"0|{doc.PubID}|{doc.Title.Left(500).Replace("|", "")}|{doc.Abstract.Left(1000).Replace("|", "")}");
                         string[] pas = doc.Applicants.Split(";&".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
@@ -122,6 +123,44 @@ namespace BRDB
                             sw.WriteLine($"0|{doc.PubID.Left(20).Replace("|", "")}|{strpa.Left(100).Replace("”", "").Replace("“", "").Replace("Č", "").Replace("\n", "").Replace("\r", "").Replace("|", "")}");
                             // en.en_pa.InsertOnSubmit(pa);
                         }
+=======
+
+                        var tmp_en = new en()
+                        {
+                            pn = doc.PubID,
+                            an = doc.AppNo,
+                            i_c = GetFistrPRCountry(doc.PubID),
+                            p_c = doc.PubID.Left(2),
+                            ady = doc.AppDate.Left(4).to_i(),
+                            pdy = doc.PubDate.Left(4).to_i(),
+                            ti = doc.Title.Left(500)
+                        };
+                        en.en.InsertOnSubmit(tmp_en);
+
+
+                        //string[] pas = doc.Applicants.Split(";&".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        //foreach (var strpa in pas)
+                        //{
+                        //    var pa = new en_pa()
+                        //    {
+                        //        pn = doc.PubNo,
+                        //        pa = strpa
+                        //    };
+                        //    en.en_pa.InsertOnSubmit(pa);
+                        //}
+
+                        //string[] pas = doc.Applicants.Split(";&".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        //foreach (var strpa in pas)
+                        //{
+                        //    var pa = new en_pa()
+                        //    {
+                        //        pn = doc.PubNo,
+                        //        pa = strpa
+                        //    };
+                        //    sw.WriteLine($"0|{doc.PubID.Left(20).Replace("|", "")}|{strpa.Left(100).Replace("”", "").Replace("“", "").Replace("Č", "").Replace("\n", "").Replace("\r", "").Replace("|", "")}");
+                        //    // en.en_pa.InsertOnSubmit(pa);
+                        //}
+>>>>>>> x
                     }
                     en.SubmitChanges();
                     Console.WriteLine($"{i} /{loop + 1}  -{DateTime.Now}");
