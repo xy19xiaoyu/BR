@@ -59,6 +59,7 @@
     </Compile>
     <Compile Include="Extend\IPCExtend.cs" />
     <Compile Include="Extend\StringExtend.cs" />
+    <Compile Include="Helper\CMDHelper.cs" />
     <Compile Include="Helper\hyHelper.cs" />
     <Compile Include="Model\hy.cs" />
     <Compile Include="Program.cs" />

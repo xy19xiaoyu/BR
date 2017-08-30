@@ -16,8 +16,8 @@ namespace BRDB
         private static enDataContext en = new enDataContext();
         static void Main(string[] args)
         {
-
-            ExchangeBiblioWPI();
+            CMDHelper.RunCMD("bcp", "");
+            //ExchangeBiblioWPI();
             //ExchangeIPCWPI();
             //ExchangeENhy();
 
@@ -99,7 +99,9 @@ namespace BRDB
         {
             long maxid = en.DocInfo_Dwpi.Max(x => x.ID);
             long loop = maxid / 1000;
-            using (StreamWriter sw = new StreamWriter("D:\\en_pa.txt", false, Encoding.GetEncoding("utf-8")))
+            using (StreamWriter sw = new StreamWriter("D:\\en_pa.txt", false, Encoding.GetEncoding("utf-8")),
+                   sw_en = new StreamWriter("D:\\en.txt", false, Encoding.GetEncoding("utf-8")),
+                   sw_en_tiabs = new StreamWriter("D:\\en_tiabs.txt", false, Encoding.GetEncoding("utf-8")))
             {
                 for (int i = 0; i < loop + 1; i++)
                 {
@@ -107,31 +109,8 @@ namespace BRDB
                     List<DocInfo_Dwpi> docinfos = en.DocInfo_Dwpi.Skip(i * 1000).Take(1000).ToList<DocInfo_Dwpi>();
                     foreach (var doc in docinfos)
                     {
-
-                        //var tmp_en = new en()
-                        //{
-                        //    pn = doc.PubID,
-                        //    an = doc.AppNo,
-                        //    i_c = GetFistrPRCountry(doc.PubID),
-                        //    p_c = doc.PubID.Left(2),
-                        //    ady = doc.AppDate.Left(4).to_i(),
-                        //    pdy = doc.PubDate.Left(4).to_i(),
-                        //    ti = doc.Title.Left(500)
-                        //};
-                        //en.en.InsertOnSubmit(tmp_en);
-
-
-                        //string[] pas = doc.Applicants.Split(";&".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                        //foreach (var strpa in pas)
-                        //{
-                        //    var pa = new en_pa()
-                        //    {
-                        //        pn = doc.PubNo,
-                        //        pa = strpa
-                        //    };
-                        //    en.en_pa.InsertOnSubmit(pa);
-                        //}
-
+                        sw_en.WriteLine($"0|{doc.PubID}|{doc.AppNo}|{GetFistrPRCountry(doc.PubID)}|{doc.PubID.Left(2)}|{doc.AppDate.Left(4).to_i()}|{doc.PubDate.Left(4).to_i()}");
+                        sw_en_tiabs.WriteLine($"0|{doc.PubID}|{doc.Title.Left(500).Replace("|", "")}|{doc.Abstract.Left(1000).Replace("|", "")}");
                         string[] pas = doc.Applicants.Split(";&".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                         foreach (var strpa in pas)
                         {
