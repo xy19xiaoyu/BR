@@ -69,7 +69,7 @@ namespace BRDB
     #endregion
 		
 		public enDataContext() : 
-				base(global::BRDB.Properties.Settings.Default.ExtractDataConnectionString1, mappingSource)
+				base(global::BRDB.Properties.Settings.Default.ExtractDataConnectionString, mappingSource)
 		{
 			OnCreated();
 		}

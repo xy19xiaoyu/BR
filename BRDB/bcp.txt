@@ -1,0 +1,22 @@
+﻿create table en_biblio
+(
+	id int identity(1,1) primary key,
+	pn varchar(20),
+	ti varchar(500),
+	asb varchar(1000),
+	pas varchar(500)
+)
+create index ix_enbiblio_pn on en_biblio(pn)
+
+bcp ExtractData.dbo.en_pa in d:\en_pa.txt -Usa -Psa@123456 -c -t"|"
+bcp ExtractData.dbo.en in d:\en.txt -Usa -Psa@123456 -c -t"|"
+bcp ExtractData.dbo.en_biblio in d:\en_tiabs.txt -Usa -Psa@123456 -c -t"|"
+
+
+bcp ExtractData.dbo.en_pa in d:\en_pa.txt -Usa -Pf302c -c -t"|"
+bcp ExtractData.dbo.en in d:\en.txt -Usa -Pf302c -c -t"|"
+bcp ExtractData.dbo.en_biblio in d:\en_tiabs.txt -Usa -Pf302c -c -t"|"
+
+
+alter table en_pa
+add cpy varchar(100)

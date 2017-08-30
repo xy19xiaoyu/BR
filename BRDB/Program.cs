@@ -16,25 +16,71 @@ namespace BRDB
         private static enDataContext en = new enDataContext();
         static void Main(string[] args)
         {
-            string bcp_pa = "bcp ExtractData.dbo.en_pa in d:\\en_pa.txt -Usa -Psa@123456 -c -t\"|\"";
-            string bcp_en = "bcp ExtractData.dbo.en in d:\\en.txt -Usa -Psa@123456 -c -t\"|\"";
+            #region wpi
 
-            CMDHelper.RunCMD(bcp_pa, "");
-            //ExchangeBiblioWPI();
-            //CMDHelper.RunCMD(bcp_en, "");
-
-            //ExchangeBiblioWPI();
+            //ExchangeBiblioWPI
             //ExchangeIPCWPI();
             //ExchangeENhy();
+            #endregion
 
-
+            #region docdb
+            ExchangeBiblio();
+            #endregion
             //ExchangeCNhy();
-            //ExchangeBiblio();
             //ExchangeIPC();
+            #region IPC
+
+            #endregion
+
+            #region hy
+
+            #endregion
+
         }
 
         #region  wpi
 
+        public static void ExchangeIPCWPI()
+        {
+            long maxid = en.Ipc_Dwpi.Max(x => x.ID);
+            long loop = maxid / 1000;
+
+            for (int i = 0; i < loop + 1; i++)
+            {
+                if (i * 1000 > maxid) break;
+                List<Ipc_Dwpi> ipcs = en.Ipc_Dwpi.Skip(i * 1000).Take(1000).ToList<Ipc_Dwpi>();
+                foreach (var ipc in ipcs)
+                {
+                    string stripc = ipc.IPC.Replace(" ", "").FormatIPC();
+                    var tmpipc = new en_ipc()
+                    {
+                        pn = ipc.PubID,
+                        ipc = stripc,
+                        ipc1 = stripc[0],
+                        ipc3 = stripc.Left(3),
+                        ipc4 = stripc.Left(4),
+                        ipc7 = stripc.Left(7)
+                    };
+                    en.en_ipc.InsertOnSubmit(tmpipc);
+                }
+                Console.WriteLine($"{i} /{loop + 1}  -{DateTime.Now}");
+                en.SubmitChanges();
+            }
+        }
+
+
+        public static string GetFistrPRCountry(string pubno)
+        {
+            try
+            {
+                return en.Priority_Dwpi.Where(x => x.PubID == pubno && x.Sequence == 1).First().PriorityNo.Left(2);
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+
+        }
         public static void ExchangeBiblioWPI()
         {
             long maxid = en.DocInfo_Dwpi.Max(x => x.ID);
@@ -71,6 +117,9 @@ namespace BRDB
         }
         #endregion
 
+        #region hy
+
+      
         public static void ExchangeENhy()
         {
             int step = 1000;
@@ -125,26 +174,18 @@ namespace BRDB
                 cn.SubmitChanges();
             }
         }
+        #endregion
 
-        public static string GetFistrPRCountry(string pubno)
-        {
-            try
-            {
-                return en.Priority_Dwpi.Where(x => x.PubID == pubno && x.Sequence == 1).First().PriorityNo.Left(2);
-            }
-            catch (Exception ex)
-            {
-                return "";
-            }
+        #region docdb
 
-        }
-        //bcp ExtractData.dbo.en_pa in d:\en_pa.txt -Usa -Psa@123456 -c -t"|"
-
+        
         public static void ExchangeBiblio()
         {
             long maxid = en.DocInfo.Max(x => x.ID);
             long loop = maxid / 1000;
-            using (StreamWriter sw = new StreamWriter("D:\\en_pa.txt", false, Encoding.GetEncoding("utf-8")))
+            using (StreamWriter sw = new StreamWriter("D:\\en_pa.txt", false, Encoding.ASCII),
+                sw_en = new StreamWriter("D:\\en.txt", false, Encoding.ASCII),
+                sw_en_tiabs = new StreamWriter("D:\\en_tiabs.txt", false, Encoding.ASCII))
             {
                 for (int i = 0; i < loop + 1; i++)
                 {
@@ -152,31 +193,19 @@ namespace BRDB
                     List<DocInfo> docinfos = en.DocInfo.Skip(i * 1000).Take(1000).ToList<DocInfo>();
                     foreach (var doc in docinfos)
                     {
-
-                        //var tmp_en = new en()
-                        //{
-                        //    pn = doc.PubID,
-                        //    an = doc.AppNo,
-                        //    i_c = doc.ApplicantCountry.Left(2),
-                        //    p_c = doc.PubID.Left(2),
-                        //    ady = doc.AppDate.Left(4).to_i(),
-                        //    pdy = doc.PubDate.Left(4).to_i()
-                        //};
-                        //en.en.InsertOnSubmit(tmp_en);
-
-
+                        sw_en.WriteLine($"0|{doc.PubID}|{doc.AppNo}|{doc.PubID.Left(2)}|{doc.ApplicantCountry.Left(2)}|{doc.AppDate.Left(4).to_i()}|{doc.PubDate.Left(4).to_i()}");
+                        sw_en_tiabs.WriteLine($"0|{doc.PubID}|{doc.Title.Left(500).Replace("|", "")}|{doc.Abstract.Left(1000).Replace("|", "")}|{doc.Applicants.Left(500).Replace("|", "")}");
                         string[] pas = doc.Applicants.Split(";&".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                         foreach (var strpa in pas)
                         {
-                            var pa = new en_pa()
+                            string[] ary = strpa.Split('(');
+                            string cpy = string.Empty;
+                            if (ary.Length >= 2)
                             {
-                                pn = doc.PubNo,
-                                pa = strpa
-                            };
-                            sw.WriteLine($"0|{doc.PubID.Left(20).Replace("|", "")}|{strpa.Left(100).Replace("”", "").Replace("“", "").Replace("Č", "").Replace("\n", "").Replace("\r", "").Replace("|", "")}");
-                            // en.en_pa.InsertOnSubmit(pa);
+                                cpy = ary[1].Replace(")", "").Trim();
+                            }
+                            sw.WriteLine($"0|{doc.PubID.Left(20).Replace("|", "")}|{strpa.Trim().Left(100).Replace("|", "")}|{cpy}");
                         }
-                        //en.SubmitChanges();
                     }
                     Console.WriteLine($"{i} /{loop + 1}  -{DateTime.Now}");
                     en.SubmitChanges();
@@ -184,35 +213,9 @@ namespace BRDB
             }
 
         }
+        #endregion
 
-
-        public static void ExchangeIPCWPI()
-        {
-            long maxid = en.Ipc_Dwpi.Max(x => x.ID);
-            long loop = maxid / 1000;
-
-            for (int i = 0; i < loop + 1; i++)
-            {
-                if (i * 1000 > maxid) break;
-                List<Ipc_Dwpi> ipcs = en.Ipc_Dwpi.Skip(i * 1000).Take(1000).ToList<Ipc_Dwpi>();
-                foreach (var ipc in ipcs)
-                {
-                    string stripc = ipc.IPC.Replace(" ", "").FormatIPC();
-                    var tmpipc = new en_ipc()
-                    {
-                        pn = ipc.PubID,
-                        ipc = stripc,
-                        ipc1 = stripc[0],
-                        ipc3 = stripc.Left(3),
-                        ipc4 = stripc.Left(4),
-                        ipc7 = stripc.Left(7)
-                    };
-                    en.en_ipc.InsertOnSubmit(tmpipc);
-                }
-                Console.WriteLine($"{i} /{loop + 1}  -{DateTime.Now}");
-                en.SubmitChanges();
-            }
-        }
+      
 
         public static void ExchangeIPC()
         {

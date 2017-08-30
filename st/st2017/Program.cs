@@ -21,8 +21,8 @@ namespace ST_2017
 
 
             List<StatConfig> configs = new List<StatConfig>();
-            configs.AddRange(Config1());
-            //configs.AddRange(ConfigEN());
+            //configs.AddRange(Config1());
+            configs.AddRange(ConfigEN());
             foreach (var config in configs)
             {
                 StateManager st = new StateManager(config);
