@@ -20,3 +20,16 @@ bcp ExtractData.dbo.en_biblio in d:\en_tiabs.txt -Usa -Pf302c -c -t"|"
 
 alter table en_pa
 add cpy varchar(100)
+
+
+
+create table cn_biblio
+(
+	id int identity(1,1) primary key,
+	sn varchar(20),
+	ti nvarchar(250),
+	abs nvarchar(500)
+)
+create index ix_cn_biblio_an on cn_biblio(sn)
+
+create index ix_cn_sn on cn(sn)
