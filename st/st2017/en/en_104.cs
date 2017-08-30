@@ -103,7 +103,7 @@ namespace ST_2017.en
                     XSSFRow xls_row = sheet.GetRow(rowIndex + tmpindex) as XSSFRow;
                     xls_row.GetCell(1).SetCellValue(pa);
                     xls_row.GetCell(2).SetCellValue(ancount);
-                    xls_row.GetCell(2).SetCellValue(cpy);
+                    xls_row.GetCell(3).SetCellValue(cpy);
                     tmpindex++;
                 }
                 #endregion

@@ -46,11 +46,15 @@ where
         public override bool MergeCell(XSSFWorkbook xbook)
         {
             ISheet sheet = xbook.GetSheet(this.Name);
-            sheet.SetColumnWidth(2, 180 * 256);
+            sheet.SetColumnWidth(2, 80 * 256);
+            sheet.SetColumnWidth(3, 80 * 256);
+            sheet.SetColumnWidth(4, 80 * 256);
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 XSSFRow xls_row = sheet.GetRow(i + 1) as XSSFRow;
                 xls_row.GetCell(2).CellStyle = valueStyle_left;
+                xls_row.GetCell(3).CellStyle = valueStyle_left;
+                xls_row.GetCell(4).CellStyle = valueStyle_left;
             }
 
             return true;
