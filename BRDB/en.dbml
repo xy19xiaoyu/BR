@@ -107,13 +107,6 @@
       <Column Name="sort" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.en_pa" Member="en_pa">
-    <Type Name="en_pa">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="pn" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="pa" Type="System.String" DbType="VarChar(400)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.en_zt" Member="en_zt1">
     <Type Name="en_zt1">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -144,6 +137,14 @@
       <Column Name="Sequence" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="PriorityNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="PriorityDate" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.en_pa" Member="en_pa">
+    <Type Name="en_pa">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="pn" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="pa" Type="System.String" DbType="VarChar(400)" CanBeNull="true" />
+      <Column Name="cpy" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

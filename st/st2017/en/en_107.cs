@@ -25,13 +25,17 @@ namespace ST_2017.en
             Console.WriteLine("正在生成表：{0}\t{1}\t{2}\t{3}", ztName, this.config.FileName, this.Name, DateTime.Now.ToString());
             string sql = @"
 select 
-	pn as 公开号,
-	an as 申请号,
-	ti as 专利名称
+	en.pn as 公开号,
+	en.an as 申请号,    
+	en_biblio.ti as 专利名称,
+    en_biblio.pas as 申请人,
+    en_biblio.abs as 摘要
 from
-	en 
+	en,
+    en_biblio
 where 
-	i_c = 'CN' 
+    en.pn = en_biblio.pn
+	and i_c = 'CN' 
 	and {0}
 ";
 

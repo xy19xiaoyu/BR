@@ -28,7 +28,7 @@ namespace ST_2017.en
         public override bool OutPut2Worksheet(XSSFWorkbook xbook)
         {
 
-            string[] heads = new string[] { "国家", "重点申请人", "申请量" };
+            string[] heads = new string[] { "国家", "重点申请人", "申请量", "CPY" };
 
             Console.WriteLine("开始出表：{0} ", Name);
             int topnumber = 50;
@@ -59,7 +59,9 @@ namespace ST_2017.en
                     select
 	                    top {2}
 	                    en_pa.pa as 申请人,
-	                    COUNT(distinct en.an) as 申请量
+	                    COUNT(distinct en.an) as 申请量,
+                        en_pa.cpy as CPY
+
                     from
 	                    en,
 	                    en_pa
@@ -68,7 +70,7 @@ namespace ST_2017.en
 	                    and en.i_c in('{0}')
 	                    and {1}
                     group by
-	                    en_pa.pa
+	                    en_pa.pa,en_pa.cpy    
                     order by 申请量 desc", GJ, GetFilter(), topnumber);
                 DataTable dtpas = DBA.SqlDbAccess.GetDataTable(CommandType.Text, pas);
                 #endregion
@@ -82,6 +84,8 @@ namespace ST_2017.en
                     xls_row.GetCell(1).CellStyle = valueStyle_left;
                     xls_row.CreateCell(2).SetCellValue(0);
                     xls_row.GetCell(2).CellStyle = valueStyle;
+                    xls_row.CreateCell(3).SetCellValue("");
+                    xls_row.GetCell(3).CellStyle = valueStyle;
                 }
                 sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + topnumber - 1, 0, 0));
                 #endregion
@@ -91,10 +95,12 @@ namespace ST_2017.en
                 {
                     string pa = parow["申请人"].ToString();
                     string ancount = parow["申请量"].ToString();
+                    string cpy = parow["CPY"].ToString();
 
                     XSSFRow xls_row = sheet.GetRow(rowIndex + tmpindex) as XSSFRow;
                     xls_row.GetCell(1).SetCellValue(pa);
                     xls_row.GetCell(2).SetCellValue(ancount);
+                    xls_row.GetCell(3).SetCellValue(cpy);
                     tmpindex++;
                 }
                 #endregion
