@@ -30,6 +30,9 @@ create table cn_biblio
 	ti nvarchar(250),
 	abs nvarchar(500)
 )
-create index ix_cn_biblio_an on cn_biblio(sn)
+create index ix_cn_biblio_an on cn_biblio(sn);
 
-create index ix_cn_sn on cn(sn)
+create index ix_cn_sn on cn(sn);
+
+
+bcp db08.dbo.cn_biblio in d:\cn_tiabs.txt -Usa -Psa@123456 -c -t"|"
