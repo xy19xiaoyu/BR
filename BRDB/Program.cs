@@ -12,8 +12,6 @@ namespace BRDB
 {
     class Program
     {
-        private static cnDataContext cn = new cnDataContext();
-        private static enDataContext en = new enDataContext();
         static void Main(string[] args)
         {
             #region wpi
@@ -43,15 +41,20 @@ namespace BRDB
 
         public static void ExchangeIPCWPI()
         {
+            enDataContext en = new enDataContext();
             long maxid = en.Ipc_Dwpi.Max(x => x.ID);
             long loop = maxid / 1000;
 
             for (int i = 0; i < loop + 1; i++)
             {
                 if (i * 1000 > maxid) break;
-                List<Ipc_Dwpi> ipcs = en.Ipc_Dwpi.Skip(i * 1000).Take(1000).ToList<Ipc_Dwpi>();
+                en = new enDataContext();
+                int min = i * 1000;
+                int max = (i + 1) * 1000 - 1;
+                List<Ipc_Dwpi> ipcs = en.Ipc_Dwpi.Where(x => x.ID >= min && x.ID <= max).ToList<Ipc_Dwpi>();
                 foreach (var ipc in ipcs)
                 {
+
                     string stripc = ipc.IPC.Replace(" ", "").FormatIPC();
                     var tmpipc = new en_ipc()
                     {
@@ -74,6 +77,7 @@ namespace BRDB
         {
             try
             {
+                enDataContext en = new enDataContext();
                 return en.Priority_Dwpi.Where(x => x.PubID == pubno && x.Sequence == 1).First().PriorityNo.Left(2);
             }
             catch (Exception ex)
@@ -84,6 +88,7 @@ namespace BRDB
         }
         public static void ExchangeBiblioWPI()
         {
+            enDataContext en = new enDataContext();
             long maxid = en.DocInfo_Dwpi.Max(x => x.ID);
             long loop = maxid / 1000;
             using (StreamWriter sw = new StreamWriter("D:\\en_pa.txt", false, Encoding.ASCII),
@@ -92,8 +97,13 @@ namespace BRDB
             {
                 for (int i = 0; i < loop + 1; i++)
                 {
+
                     if (i * 1000 > maxid) break;
-                    List<DocInfo_Dwpi> docinfos = en.DocInfo_Dwpi.Skip(i * 1000).Take(1000).ToList<DocInfo_Dwpi>();
+                    en = new enDataContext();
+                    int min = i * 1000;
+                    int max = (i + 1) * 1000 - 1;
+
+                    List<DocInfo_Dwpi> docinfos = en.DocInfo_Dwpi.Where(x => x.ID >= min && x.ID <= max).ToList<DocInfo_Dwpi>();
                     foreach (var doc in docinfos)
                     {
                         sw_en.WriteLine($"0|{doc.PubID}|{doc.AppNo}|{doc.PubID.Left(2)}|{GetFistrPRCountry(doc.PubID)}|{doc.AppDate.Left(4).to_i()}|{doc.PubDate.Left(4).to_i()}");
@@ -123,6 +133,7 @@ namespace BRDB
 
         public static void ExchangeENhy()
         {
+            enDataContext en = new enDataContext();
             int step = 1000;
             long maxid = en.en_ipc.Max(x => x.id);
             long loop = maxid / step;
@@ -132,7 +143,10 @@ namespace BRDB
                 for (int i = 0; i < loop + 1; i++)
                 {
                     if (i * step > maxid) break;
-                    List<en_ipc> ipcs = en.en_ipc.Skip(i * step).Take(step).ToList<en_ipc>();
+                    en = new enDataContext();
+                    int min = i * step;
+                    int max = (i + 1) * step - 1;
+                    List<en_ipc> ipcs = en.en_ipc.Where(x => x.id >= min && x.id <= max).ToList<en_ipc>();
                     List<en_zt> zts = new List<en_zt>();
                     foreach (var ipc in ipcs)
                     {
@@ -154,6 +168,7 @@ namespace BRDB
 
         public static void ExchangeCNhy()
         {
+            cnDataContext cn = new cnDataContext();
             long maxid = cn.cn_ipc.Max(x => x.id);
             long loop = maxid / 1000;
 
@@ -161,7 +176,10 @@ namespace BRDB
             for (int i = 0; i < loop + 1; i++)
             {
                 if (i * 1000 > maxid) break;
-                List<cn_ipc> ipcs = cn.cn_ipc.Skip(i * 1000).Take(1000).ToList<cn_ipc>();
+                cn = new cnDataContext();
+                int min = i * 1000;
+                int max = (i + 1) * 1000 - 1;
+                List<cn_ipc> ipcs = cn.cn_ipc.Where(x => x.id >= min && x.id <= max).ToList<cn_ipc>();
                 foreach (var ipc in ipcs)
                 {
                     List<string> ids = hyHelper.GetHyIds(ipc.ipc);
@@ -182,16 +200,20 @@ namespace BRDB
 
         public static void ExchangeBiblio()
         {
+            enDataContext en = new enDataContext();
             long maxid = en.DocInfo.Max(x => x.ID);
             long loop = maxid / 1000;
-            using (StreamWriter sw = new StreamWriter("D:\\en_pa.txt", false, Encoding.ASCII),
-                sw_en = new StreamWriter("D:\\en.txt", false, Encoding.ASCII),
-                sw_en_tiabs = new StreamWriter("D:\\en_biblio.txt", false, Encoding.ASCII))
+            using (StreamWriter sw = new StreamWriter("D:\\en_pa.txt", false, Encoding.ASCII) { AutoFlush = true },
+                sw_en = new StreamWriter("D:\\en.txt", false, Encoding.ASCII) { AutoFlush = true },
+                sw_en_tiabs = new StreamWriter("D:\\en_biblio.txt", false, Encoding.ASCII) { AutoFlush = true })
             {
                 for (int i = 0; i < loop + 1; i++)
                 {
                     if (i * 1000 > maxid) break;
-                    List<DocInfo> docinfos = en.DocInfo.Skip(i * 1000).Take(1000).ToList<DocInfo>();
+                    en = new enDataContext();
+                    int min = i * 1000;
+                    int max = (i + 1) * 1000 - 1;
+                    List<DocInfo> docinfos = en.DocInfo.Where(x => x.ID >= min && x.ID <= max).ToList<DocInfo>();
                     foreach (var doc in docinfos)
                     {
                         sw_en.WriteLine($"0|{doc.PubID}|{doc.AppNo}|{doc.PubID.Left(2)}|{doc.ApplicantCountry.Left(2)}|{doc.AppDate.Left(4).to_i()}|{doc.PubDate.Left(4).to_i()}");
@@ -209,7 +231,6 @@ namespace BRDB
                         }
                     }
                     Console.WriteLine($"{i} /{loop + 1}  -{DateTime.Now}");
-                    en.SubmitChanges();
                 }
             }
 
@@ -220,6 +241,7 @@ namespace BRDB
 
         public static void ExchangeIPC()
         {
+            enDataContext en = new enDataContext();
             long maxid = en.Ipc.Max(x => x.ID);
             long loop = maxid / 1000;
             using (StreamWriter sw = new StreamWriter("d:\\en_ipc.txt", false, Encoding.UTF8) { AutoFlush = true })
@@ -227,7 +249,10 @@ namespace BRDB
                 for (int i = 0; i < loop + 1; i++)
                 {
                     if (i * 1000 > maxid) break;
-                    List<Ipc> ipcs = en.Ipc.Skip(i * 1000).Take(1000).ToList<Ipc>();
+                    en = new enDataContext();
+                    int min = i * 1000;
+                    int max = (i + 1) * 1000 - 1;
+                    List<Ipc> ipcs = en.Ipc.Where(x => x.ID >= min && x.ID <= max).ToList<Ipc>();
                     foreach (var ipc in ipcs)
                     {
                         string stripc = ipc.IPC1.FormatIPC();
@@ -245,7 +270,6 @@ namespace BRDB
 
                     }
                     Console.WriteLine($"{i} /{loop + 1}  -{DateTime.Now}");
-                    en.SubmitChanges();
                 }
             }
 
