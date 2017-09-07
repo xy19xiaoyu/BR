@@ -26,7 +26,7 @@ namespace BRDB.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-JLKLR7U;Initial Catalog=ExtractData;Persist Security Info=Tru" +
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=localhost;Initial Catalog=ExtractData;Persist Security Info=Tru" +
             "e;User ID=sa;Password=f302c")]
         public string ExtractDataConnectionString {
             get {

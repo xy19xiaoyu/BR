@@ -25,6 +25,7 @@ namespace BRDB
 
             #region docdb
             ExchangeBiblio();
+            ExchangeIPC();
             #endregion
             //ExchangeCNhy();
             //ExchangeIPC();
@@ -119,7 +120,7 @@ namespace BRDB
 
         #region hy
 
-      
+
         public static void ExchangeENhy()
         {
             int step = 1000;
@@ -178,14 +179,14 @@ namespace BRDB
 
         #region docdb
 
-        
+
         public static void ExchangeBiblio()
         {
             long maxid = en.DocInfo.Max(x => x.ID);
             long loop = maxid / 1000;
             using (StreamWriter sw = new StreamWriter("D:\\en_pa.txt", false, Encoding.ASCII),
                 sw_en = new StreamWriter("D:\\en.txt", false, Encoding.ASCII),
-                sw_en_tiabs = new StreamWriter("D:\\en_tiabs.txt", false, Encoding.ASCII))
+                sw_en_tiabs = new StreamWriter("D:\\en_biblio.txt", false, Encoding.ASCII))
             {
                 for (int i = 0; i < loop + 1; i++)
                 {
@@ -215,34 +216,40 @@ namespace BRDB
         }
         #endregion
 
-      
+
 
         public static void ExchangeIPC()
         {
             long maxid = en.Ipc.Max(x => x.ID);
             long loop = maxid / 1000;
-
-            for (int i = 0; i < loop + 1; i++)
+            using (StreamWriter sw = new StreamWriter("d:\\en_ipc.txt", false, Encoding.UTF8) { AutoFlush = true })
             {
-                if (i * 1000 > maxid) break;
-                List<Ipc> ipcs = en.Ipc.Skip(i * 1000).Take(1000).ToList<Ipc>();
-                foreach (var ipc in ipcs)
+                for (int i = 0; i < loop + 1; i++)
                 {
-                    string stripc = ipc.IPC1.FormatIPC();
-                    var tmpipc = new en_ipc()
+                    if (i * 1000 > maxid) break;
+                    List<Ipc> ipcs = en.Ipc.Skip(i * 1000).Take(1000).ToList<Ipc>();
+                    foreach (var ipc in ipcs)
                     {
-                        pn = ipc.PubID,
-                        ipc = stripc,
-                        ipc1 = stripc[0],
-                        ipc3 = stripc.Left(3),
-                        ipc4 = stripc.Left(4),
-                        ipc7 = stripc.Left(7)
-                    };
-                    en.en_ipc.InsertOnSubmit(tmpipc);
+                        string stripc = ipc.IPC1.FormatIPC();
+                        var tmpipc = new en_ipc()
+                        {
+                            pn = ipc.PubID,
+                            ipc = stripc,
+                            ipc1 = stripc[0],
+                            ipc3 = stripc.Left(3),
+                            ipc4 = stripc.Left(4),
+                            ipc7 = stripc.Left(7)
+                        };
+                        // en.en_ipc.InsertOnSubmit(tmpipc);
+                        sw.WriteLine($"0|{ipc.PubID}|{stripc}|{stripc[0]}|{stripc.Left(3)}|{stripc.Left(4)}|{stripc.Left(4)}|{stripc.Left(7)}");
+
+                    }
+                    Console.WriteLine($"{i} /{loop + 1}  -{DateTime.Now}");
+                    en.SubmitChanges();
                 }
-                Console.WriteLine($"{i} /{loop + 1}  -{DateTime.Now}");
-                en.SubmitChanges();
             }
+
+
         }
     }
 
