@@ -12,29 +12,23 @@ namespace BRDB
 {
     class Program
     {
+        #region wpi
+        //static void Main(string[] args)
+        //{
+
+        //    ExchangeBiblioWPI();
+        //    ExchangeIPCWPI();
+        //    //ExchangeENhy();
+        //}
+        #endregion
         static void Main(string[] args)
         {
-            #region wpi
-
-            //ExchangeBiblioWPI
-            //ExchangeIPCWPI();
-            //ExchangeENhy();
-            #endregion
-
             #region docdb
             ExchangeBiblio();
             ExchangeIPC();
             #endregion
             //ExchangeCNhy();
             //ExchangeIPC();
-            #region IPC
-
-            #endregion
-
-            #region hy
-
-            #endregion
-
         }
 
         #region  wpi
@@ -51,11 +45,11 @@ namespace BRDB
                 en = new enDataContext();
                 int min = i * 1000;
                 int max = (i + 1) * 1000 - 1;
-                List<Ipc_Dwpi> ipcs = en.Ipc_Dwpi.Where(x => x.ID >= min && x.ID <= max).ToList<Ipc_Dwpi>();
+                var ipcs = en.Ipc.Where(x => x.ID >= min && x.ID <= max);
                 foreach (var ipc in ipcs)
                 {
 
-                    string stripc = ipc.IPC.Replace(" ", "").FormatIPC();
+                    string stripc = ipc.IPC1.Replace(" ", "").FormatIPC();
                     var tmpipc = new en_ipc()
                     {
                         pn = ipc.PubID,
@@ -78,9 +72,9 @@ namespace BRDB
             try
             {
                 enDataContext en = new enDataContext();
-                return en.Priority_Dwpi.Where(x => x.PubID == pubno && x.Sequence == 1).First().PriorityNo.Left(2);
+                return en.Priority.Where(x => x.PubID == pubno && x.Sequence == 1).First().PriorityNo.Left(2);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return "";
             }
@@ -89,7 +83,7 @@ namespace BRDB
         public static void ExchangeBiblioWPI()
         {
             enDataContext en = new enDataContext();
-            long maxid = en.DocInfo_Dwpi.Max(x => x.ID);
+            long maxid = en.DocInfo.Max(x => x.ID);
             long loop = maxid / 1000;
             using (StreamWriter sw = new StreamWriter("D:\\en_pa.txt", false, Encoding.ASCII),
                    sw_en = new StreamWriter("D:\\en.txt", false, Encoding.ASCII),
@@ -103,7 +97,7 @@ namespace BRDB
                     int min = i * 1000;
                     int max = (i + 1) * 1000 - 1;
 
-                    List<DocInfo_Dwpi> docinfos = en.DocInfo_Dwpi.Where(x => x.ID >= min && x.ID <= max).ToList<DocInfo_Dwpi>();
+                    var docinfos = en.DocInfo.Where(x => x.ID >= min && x.ID <= max);
                     foreach (var doc in docinfos)
                     {
                         sw_en.WriteLine($"0|{doc.PubID}|{doc.AppNo}|{doc.PubID.Left(2)}|{GetFistrPRCountry(doc.PubID)}|{doc.AppDate.Left(4).to_i()}|{doc.PubDate.Left(4).to_i()}");
@@ -213,7 +207,7 @@ namespace BRDB
                     en = new enDataContext();
                     int min = i * 1000;
                     int max = (i + 1) * 1000 - 1;
-                    List<DocInfo> docinfos = en.DocInfo.Where(x => x.ID >= min && x.ID <= max).ToList<DocInfo>();
+                    var docinfos = en.DocInfo.Where(x => x.ID >= min && x.ID <= max);
                     foreach (var doc in docinfos)
                     {
                         sw_en.WriteLine($"0|{doc.PubID}|{doc.AppNo}|{doc.PubID.Left(2)}|{doc.ApplicantCountry.Left(2)}|{doc.AppDate.Left(4).to_i()}|{doc.PubDate.Left(4).to_i()}");
@@ -252,7 +246,7 @@ namespace BRDB
                     en = new enDataContext();
                     int min = i * 1000;
                     int max = (i + 1) * 1000 - 1;
-                    List<Ipc> ipcs = en.Ipc.Where(x => x.ID >= min && x.ID <= max).ToList<Ipc>();
+                    var ipcs = en.Ipc.Where(x => x.ID >= min && x.ID <= max);
                     foreach (var ipc in ipcs)
                     {
                         string stripc = ipc.IPC1.FormatIPC();
