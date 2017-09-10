@@ -24,8 +24,9 @@ namespace BRDB
         static void Main(string[] args)
         {
             #region docdb
-            ExchangeBiblio();
-            ExchangeIPC();
+            //ExchangeBiblio();
+            //ExchangeIPC();
+            ExchangeENhy();
             #endregion
             //ExchangeCNhy();
             //ExchangeIPC();
@@ -141,13 +142,11 @@ namespace BRDB
                     int min = i * step;
                     int max = (i + 1) * step - 1;
                     List<en_ipc> ipcs = en.en_ipc.Where(x => x.id >= min && x.id <= max).ToList<en_ipc>();
-                    List<en_zt> zts = new List<en_zt>();
                     foreach (var ipc in ipcs)
                     {
                         List<string> ids = hyHelper.GetHyIds(ipc.ipc);
                         foreach (var x in ids)
                         {
-                            zts.Add(new en_zt() { pn = ipc.pn, zt = x.to_i() });
                             sw.WriteLine($"0|{ipc.pn}|{x.to_i()}");
                         }
 
@@ -247,20 +246,12 @@ namespace BRDB
                     int min = i * 1000;
                     int max = (i + 1) * 1000 - 1;
                     var ipcs = en.Ipc.Where(x => x.ID >= min && x.ID <= max);
+                    int j = 0;
                     foreach (var ipc in ipcs)
                     {
                         string stripc = ipc.IPC1.FormatIPC();
-                        var tmpipc = new en_ipc()
-                        {
-                            pn = ipc.PubID,
-                            ipc = stripc,
-                            ipc1 = stripc[0],
-                            ipc3 = stripc.Left(3),
-                            ipc4 = stripc.Left(4),
-                            ipc7 = stripc.Left(7)
-                        };
-                        // en.en_ipc.InsertOnSubmit(tmpipc);
-                        sw.WriteLine($"0|{ipc.PubID}|{stripc}|{stripc[0]}|{stripc.Left(3)}|{stripc.Left(4)}|{stripc.Left(4)}|{stripc.Left(7)}");
+                        sw.WriteLine($"0|{ipc.PubID}|{stripc}|{stripc[0]}|{stripc.Left(3)}|{stripc.Left(4)}|{stripc.Left(7)}|{j}");
+                        j++;
 
                     }
                     Console.WriteLine($"{i} /{loop + 1}  -{DateTime.Now}");

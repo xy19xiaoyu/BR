@@ -86,19 +86,46 @@ namespace ST_2017
 
             //});
 
-            configs.Add(new StatConfig()
+            string top3guojia = @"select top 3 i_c as tt from 
+en 
+where P_c = '{0}'  and i_c not in ('US','JP','{0}','')
+group by i_c
+order by  tt desc
+";
+            string[] guojias = new string[] { "MN", "RU", "KZ", "KG", "TJ", "UZ", "MY", "SG", "PH", "PL", "CZ", "CS", "HU", "SI", "HR", "RO", "BG", "YU", "ME", "BA", "EE", "LT", "LV", "BY", "MD", "TR", "SA", "JO", "IL", "AM", "GE", "EG" };
+
+            foreach (var guojia in guojias)
             {
-                Type = "EN",
-                Dir = "国外",
-                FileName = "ID",
-                GuoJias = new List<string>() { "ID" },
-                Shengs = new List<string>(),
-                Tables = new List<int>() { 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113 },
-                ZLTypes = new List<string>(),
-                ZTNames = new List<string>(),
-                Years = new List<string>() { "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017" },
-                Top5Guojia = new List<string>() { "EP", "DE", "CN", "US", "JP" }
-            });
+                DataTable top3gj = DBA.SqlDbAccess.GetDataTable(CommandType.Text, string.Format(top3guojia, guojia));
+                List<string> lstGuoJia = new List<string>();
+
+                if (top3gj.Rows.Count > 0)
+                {
+                    foreach (DataRow row in top3gj.Rows)
+                    {
+                        lstGuoJia.Add(row["i_c"].ToString());
+                    }
+                }
+                lstGuoJia.Add("US");
+                lstGuoJia.Add("JP");
+
+                configs.Add(new StatConfig()
+                {
+                    Type = "EN",
+                    Dir = "国外",
+                    FileName = guojia,
+                    GuoJias = new List<string>() { guojia },
+                    Shengs = new List<string>(),
+                    Tables = new List<int>() { 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113 },
+                    ZLTypes = new List<string>(),
+                    ZTNames = new List<string>(),
+                    Years = new List<string>() { "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017" },
+                    Top5Guojia = lstGuoJia
+                });
+            }
+
+
+
 
 
             return configs;
