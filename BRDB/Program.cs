@@ -13,58 +13,54 @@ namespace BRDB
     class Program
     {
         #region wpi
-        //static void Main(string[] args)
-        //{
-
-        //    ExchangeBiblioWPI();
-        //    ExchangeIPCWPI();
-        //    //ExchangeENhy();
-        //}
-        #endregion
         static void Main(string[] args)
         {
-            #region docdb
-            //ExchangeBiblio();
-            //ExchangeIPC();
+
+            //ExchangeBiblioWPI();
+            //ExchangeIPCWPI();
             ExchangeENhy();
-            #endregion
-            //ExchangeCNhy();
-            //ExchangeIPC();
         }
+        #endregion
+        //static void Main(string[] args)
+        //{
+        //    #region docdb
+        //    //ExchangeBiblio();
+        //    //ExchangeIPC();
+        //    //ExchangeENhy();
+        //    #endregion
+        //    //ExchangeCNhy();
+        //    //ExchangeIPC();
+        //}
 
         #region  wpi
 
         public static void ExchangeIPCWPI()
         {
             enDataContext en = new enDataContext();
-            long maxid = en.Ipc_Dwpi.Max(x => x.ID);
+            long maxid = en.Ipc.Max(x => x.ID);
             long loop = maxid / 1000;
-
-            for (int i = 0; i < loop + 1; i++)
+            using (StreamWriter sw = new StreamWriter("d:\\en_ipc1.txt", false, Encoding.UTF8) { AutoFlush = true })
             {
-                if (i * 1000 > maxid) break;
-                en = new enDataContext();
-                int min = i * 1000;
-                int max = (i + 1) * 1000 - 1;
-                var ipcs = en.Ipc.Where(x => x.ID >= min && x.ID <= max);
-                foreach (var ipc in ipcs)
+                for (int i = 0; i < loop + 1; i++)
                 {
-
-                    string stripc = ipc.IPC1.Replace(" ", "").FormatIPC();
-                    var tmpipc = new en_ipc()
+                    if (i * 1000 > maxid) break;
+                    en = new enDataContext();
+                    int min = i * 1000;
+                    int max = (i + 1) * 1000 - 1;
+                    var ipcs = en.Ipc.Where(x => x.ID >= min && x.ID <= max);
+                    int j = 0;
+                    foreach (var ipc in ipcs)
                     {
-                        pn = ipc.PubID,
-                        ipc = stripc,
-                        ipc1 = stripc[0],
-                        ipc3 = stripc.Left(3),
-                        ipc4 = stripc.Left(4),
-                        ipc7 = stripc.Left(7)
-                    };
-                    en.en_ipc.InsertOnSubmit(tmpipc);
+                        string stripc = ipc.IPC1.Replace(" ", "").FormatIPC();
+                        sw.WriteLine($"0|{ipc.PubID}|{stripc}|{stripc[0]}|{stripc.Left(3)}|{stripc.Left(4)}|{stripc.Left(7)}|{j}");
+                        j++;
+
+                    }
+                    Console.WriteLine($"{i} /{loop + 1}  -{DateTime.Now}");
                 }
-                Console.WriteLine($"{i} /{loop + 1}  -{DateTime.Now}");
-                en.SubmitChanges();
             }
+
+
         }
 
 
@@ -86,9 +82,9 @@ namespace BRDB
             enDataContext en = new enDataContext();
             long maxid = en.DocInfo.Max(x => x.ID);
             long loop = maxid / 1000;
-            using (StreamWriter sw = new StreamWriter("D:\\en_pa.txt", false, Encoding.ASCII),
-                   sw_en = new StreamWriter("D:\\en.txt", false, Encoding.ASCII),
-                   sw_en_tiabs = new StreamWriter("D:\\en_tiabs.txt", false, Encoding.ASCII))
+            using (StreamWriter sw = new StreamWriter("D:\\en_pa1.txt", false, Encoding.ASCII),
+                   sw_en = new StreamWriter("D:\\en1.txt", false, Encoding.ASCII),
+                   sw_en_tiabs = new StreamWriter("D:\\en_tiabs1.txt", false, Encoding.ASCII))
             {
                 for (int i = 0; i < loop + 1; i++)
                 {

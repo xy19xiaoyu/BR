@@ -86,14 +86,14 @@ namespace ST_2017
 
             //});
 
-            string top3guojia = @"select top 3 i_c as tt from 
+            string top3guojia = @"select top 3 i_c,count(*) as tt from 
 en 
 where P_c = '{0}'  and i_c not in ('US','JP','{0}','')
 group by i_c
 order by  tt desc
 ";
-            string[] guojias = new string[] { "MN", "RU", "KZ", "KG", "TJ", "UZ", "MY", "SG", "PH", "PL", "CZ", "CS", "HU", "SI", "HR", "RO", "BG", "YU", "ME", "BA", "EE", "LT", "LV", "BY", "MD", "TR", "SA", "JO", "IL", "AM", "GE", "EG" };
-
+            // string[] guojias = new string[] { "MN", "RU", "KZ", "KG", "TJ", "UZ", "MY", "SG", "PH", "PL", "CZ", "CS", "HU", "SI", "HR", "RO", "BG", "YU", "ME", "BA", "EE", "LT", "LV", "BY", "MD", "TR", "SA", "JO", "IL", "AM", "GE", "EG" };
+            string[] guojias = new string[] { "TH", "VN" };
             foreach (var guojia in guojias)
             {
                 DataTable top3gj = DBA.SqlDbAccess.GetDataTable(CommandType.Text, string.Format(top3guojia, guojia));

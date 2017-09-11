@@ -151,3 +151,21 @@ CREATE NONCLUSTERED INDEX [ix_en_pn] ON [dbo].[en]
 	[pn] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 GO
+
+
+
+CREATE NONCLUSTERED INDEX ix_enzt_zt
+ON [dbo].[en_zt] ([zt])
+INCLUDE ([pn])
+GO
+
+
+CREATE NONCLUSTERED INDEX ix_en_pc1
+ON [dbo].[en] ([p_c])
+INCLUDE ([pn],[an],[ady])
+GO
+
+CREATE NONCLUSTERED INDEX ix_en_pcic1
+ON [dbo].[en] ([p_c],[i_c])
+INCLUDE ([pn],[an])
+GO
