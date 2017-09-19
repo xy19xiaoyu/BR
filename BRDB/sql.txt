@@ -62,8 +62,8 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[en_ipc](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	[pn] [varchar](13) NULL,
-	[ipc] [varchar](15) NULL,
+	[pn] [varchar](20) NULL,
+	[ipc] [varchar](20) NULL,
 	[ipc1] [char](1) NULL,
 	[ipc3] [varchar](3) NULL,
 	[ipc4] [varchar](5) NULL,
