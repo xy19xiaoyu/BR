@@ -93,7 +93,7 @@ group by i_c
 order by  tt desc
 ";
             // string[] guojias = new string[] { "MN", "RU", "KZ", "KG", "TJ", "UZ", "MY", "SG", "PH", "PL", "CZ", "CS", "HU", "SI", "HR", "RO", "BG", "YU", "ME", "BA", "EE", "LT", "LV", "BY", "MD", "TR", "SA", "JO", "IL", "AM", "GE", "EG" };
-            string[] guojias = new string[] { "TH", "VN" };
+            string[] guojias = new string[] { "IN" };
             foreach (var guojia in guojias)
             {
                 DataTable top3gj = DBA.SqlDbAccess.GetDataTable(CommandType.Text, string.Format(top3guojia, guojia));

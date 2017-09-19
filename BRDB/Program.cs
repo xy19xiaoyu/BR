@@ -18,7 +18,7 @@ namespace BRDB
 
             //ExchangeBiblioWPI();
             //ExchangeIPCWPI();
-            ExchangeENhy();
+             ExchangeENhy();
         }
         #endregion
         //static void Main(string[] args)
@@ -63,13 +63,12 @@ namespace BRDB
 
         }
 
-
+        public static enDataContext en_pri = new enDataContext();
         public static string GetFistrPRCountry(string pubno)
         {
             try
             {
-                enDataContext en = new enDataContext();
-                return en.Priority.Where(x => x.PubID == pubno && x.Sequence == 1).First().PriorityNo.Left(2);
+                return en_pri.Priority.Where(x => x.PubID == pubno && x.Sequence == 1).First().PriorityNo.Left(2);
             }
             catch (Exception)
             {
@@ -84,7 +83,7 @@ namespace BRDB
             long loop = maxid / 1000;
             using (StreamWriter sw = new StreamWriter("D:\\en_pa1.txt", false, Encoding.ASCII),
                    sw_en = new StreamWriter("D:\\en1.txt", false, Encoding.ASCII),
-                   sw_en_tiabs = new StreamWriter("D:\\en_tiabs1.txt", false, Encoding.ASCII))
+                   sw_en_tiabs = new StreamWriter("D:\\en_biblio1.txt", false, Encoding.ASCII))
             {
                 for (int i = 0; i < loop + 1; i++)
                 {

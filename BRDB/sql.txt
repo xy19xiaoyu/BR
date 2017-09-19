@@ -169,3 +169,6 @@ CREATE NONCLUSTERED INDEX ix_en_pcic1
 ON [dbo].[en] ([p_c],[i_c])
 INCLUDE ([pn],[an])
 GO
+
+create index ix_priority_pn_ser on Priority(PubID,Sequence)
+go
