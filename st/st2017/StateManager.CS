@@ -66,6 +66,8 @@ namespace ST_2017
                 lstST.Add(new en_111());
                 lstST.Add(new en_112());
                 lstST.Add(new en_113());
+                lstST.Add(new en_114());
+                lstST.Add(new en_115());                
                 #endregion
 
             }

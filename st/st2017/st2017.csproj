@@ -74,6 +74,8 @@
     <Compile Include="cn\cn_03.cs" />
     <Compile Include="cn\cn_02.cs" />
     <Compile Include="cn\cn_01.cs" />
+    <Compile Include="en\en_115.cs" />
+    <Compile Include="en\en_114.cs" />
     <Compile Include="en\en_113.cs" />
     <Compile Include="en\en_112.cs" />
     <Compile Include="en\en_111.cs" />
