@@ -14,7 +14,7 @@ namespace ST_2017.en
         public en_114()
         {
             this.Id = 114;
-            this.Name = "专利申请-本国申请人申请情况";
+            this.Name = "专利申请-国外申请人申请情况";
             this.type = "EN";
             this.DES = "";
         }
