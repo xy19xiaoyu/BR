@@ -18,7 +18,9 @@ namespace BRDB
 
             //ExchangeBiblioWPI();
             //ExchangeIPCWPI();
-             ExchangeENhy();
+            ExchangeENhy();
+
+
         }
         #endregion
         //static void Main(string[] args)
@@ -225,6 +227,38 @@ namespace BRDB
         }
         #endregion
 
+
+        #region fix i_c is null bug
+        static void fixbug()
+        {
+            enDataContext en = new enDataContext();
+            var ens = en.en.Where(x => x.i_c == "");
+            int i = 0;
+            foreach (var e in ens)
+            {
+                i++;
+                var pr = en.Priority.Where(x => x.PubID == e.pn && x.Sequence == 1).FirstOrDefault();
+                if (pr != null)
+                {
+                    string ic = pr.PriorityNo.Left(2);
+                    e.i_c = ic;
+                    if (i % 100 == 0)
+                    {
+                        en.SubmitChanges();
+                    }
+                    Console.WriteLine($"{i}\t{e.pn}\t{ic}");
+
+                }
+                else
+                {
+                    Console.WriteLine($"{i}\t{e.pn}");
+                }
+
+
+            }
+            en.SubmitChanges();
+        }
+        #endregion
 
 
         public static void ExchangeIPC()
