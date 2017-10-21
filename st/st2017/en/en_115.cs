@@ -23,7 +23,7 @@ namespace ST_2017.en
             Console.WriteLine("正在生成表：{0}\t{1}\t{2}\t{3}", ztName, this.config.FileName, this.Name, DateTime.Now.ToString());
             string sql = @"
 select
-	ady as 申请年, 
+	ady as 年代, 
 	count(distinct an) 申请量
 from 
 	en
@@ -31,10 +31,12 @@ where
 	{0}
 group by 
 	p_c,ady
+order by ady
 ";
 
             string exe_sql = string.Format(sql, GetFilter());
             dt = DBA.SqlDbAccess.GetDataTable(CommandType.Text, exe_sql);
+            ReadDateTable(dt);
             return true;
         }
 
