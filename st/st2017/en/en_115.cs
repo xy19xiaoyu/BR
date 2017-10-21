@@ -40,7 +40,7 @@ group by
 
         public override string GetFilter()
         {
-            return $" en.p_c in({config.GuoJia}) and en.i_c in({ config.GuoJia})";
+            return $" en.p_c in({config.GuoJia}) and (en.i_c in({ config.GuoJia}) or en.i_c is null)";
         }
     }
 }
