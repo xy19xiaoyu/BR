@@ -12,16 +12,21 @@ namespace BRDB
 {
     class Program
     {
-        #region wpi
+
         static void Main(string[] args)
         {
-
-            //ExchangeBiblioWPI();
-            //ExchangeIPCWPI();
-            ExchangeENhy();
-
-
+            ExchangeCNhy();
         }
+        #region wpi
+        //static void Main(string[] args)
+        //{
+
+        //    //ExchangeBiblioWPI();
+        //    //ExchangeIPCWPI();
+        //    ExchangeENhy();
+
+
+        //}
         #endregion
         //static void Main(string[] args)
         //{

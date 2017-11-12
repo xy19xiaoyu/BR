@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="cn\cn_09.cs" />
     <Compile Include="cn\cn_08.cs" />
     <Compile Include="cn\cn_07.cs" />
     <Compile Include="cn\cn_06.cs" />
@@ -74,8 +75,8 @@
     <Compile Include="cn\cn_03.cs" />
     <Compile Include="cn\cn_02.cs" />
     <Compile Include="cn\cn_01.cs" />
-    <Compile Include="en\en_115.cs" />
     <Compile Include="en\en_114.cs" />
+    <Compile Include="en\en_115.cs" />
     <Compile Include="en\en_113.cs" />
     <Compile Include="en\en_112.cs" />
     <Compile Include="en\en_111.cs" />

@@ -47,6 +47,7 @@ namespace ST_2017
                 lstST.Add(new cn_06());
                 lstST.Add(new cn_07());
                 lstST.Add(new cn_08());
+                lstST.Add(new cn_09());
                 #endregion
 
             }

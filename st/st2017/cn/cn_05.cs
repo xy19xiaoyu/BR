@@ -21,8 +21,8 @@ namespace ST_2017.cn
         public override bool Sate(string ztName)
         {
             Console.WriteLine("正在生成表：{0}\t{1}\t{2}\t{3}", ztName, this.config.FileName, this.Name, DateTime.Now.ToString());
-            string sql = @"
-select zt,'' as 行业,ID,RS,UA from (
+            string sql = string.Format(@"
+select zt,'' as 行业,{0} from (
 	select 
 		zt ,
 		city as 国家,
@@ -32,7 +32,7 @@ select zt,'' as 行业,ID,RS,UA from (
 	group by 
 		cn_zt.zt,city
 	) AS a
-PIVOT(sum(专利数量) for 国家 in([ID],[RS],[UA])) as table2";
+PIVOT(sum(专利数量) for 国家 in({0})) as table2", GetCT());
 
             dt = DBA.SqlDbAccess.GetDataTable(CommandType.Text, sql);
 
@@ -43,6 +43,13 @@ PIVOT(sum(专利数量) for 国家 in([ID],[RS],[UA])) as table2";
             dt.Columns.RemoveAt(0);
             return true;
         }
+        public string GetCT()
+        {
+            return $"[{string.Join("],[", config.GuoJias)}]";
+
+        }
+
+
 
     }
 }
